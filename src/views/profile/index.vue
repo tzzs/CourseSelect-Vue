@@ -26,10 +26,16 @@
             <el-col :span="14" :offset="1">
               <el-row :gutter="24">
                 <el-col :span="7">
-                  <span class="name" style="margin-top: 1%;display: block">欺负小虫子</span>
+                  <span class="name" style="margin-top: 1%;display: block">
+                    欺负小虫子
+                    <svg-icon icon-class="woman"></svg-icon>
+                  </span>
                 </el-col>
                 <el-col :span="7">
                   <el-button type="primary" size="small" icon="el-icon-edit">编辑个人信息</el-button>
+                </el-col>
+                <el-col :span="7">
+                  <router-link class="pan-btn blue-btn" to="/course/index">Course</router-link>
                 </el-col>
               </el-row>
               <el-row :gutter="24">
@@ -93,17 +99,22 @@
           </el-row>
           <el-row :gutter="24" style="margin-top: 3%">
             <el-col :span="14" :offset="3">
-              <span class="page2">专业：计算机科学与技术</span>
-              <!--              <hr style="size: 1px;">-->
+              <span class="page2">手机绑定：173****4176</span>
+              <a href="" style="color: #409EFF;">&nbsp;&nbsp;修改</a>
               <div class="divider-line"></div>
             </el-col>
           </el-row>
           <el-row :gutter="24" style="margin-top: 3%">
             <el-col :span="14" :offset="3">
-              <span class="page2">班级：115030703</span>
+              <span class="page2">账户密码：</span>
+              <a href="" style="color: #409EFF;">修改密码</a>
               <div class="divider-line"></div>
             </el-col>
           </el-row>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="信息修改" name="third">
+        <div class="base_info">
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -111,8 +122,10 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import PanThumb from '@/components/PanThumb'
 
 export default {
+  name: 'Profile',
   data() {
     return {
       activeName: 'first',
@@ -124,7 +137,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['avatar'])
+    ...mapGetters(['avatar']),
+    PanThumb
   },
   methods: {
     handleClick(tab, event) {
@@ -163,7 +177,8 @@ export default {
     height: 100%;
     margin: 1% 2% 2% 1%;
     padding: 2%;
-    box-shadow: 2px 2px 3px #aaaaaa;
+    /*box-shadow: 2px 2px 3px #aaaaaa;*/
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15), 0 0 6px rgba(0, 0, 0, 0.15)
   }
 
   .avatar-uploader .el-upload {

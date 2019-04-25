@@ -51,7 +51,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
     }]
   },
 
@@ -95,7 +95,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'index',
-        name: 'course',
+        name: 'Course',
         component: () => import('@/views/course/index'),
         meta: { title: 'Course', icon: 'list' }
       }
@@ -197,9 +197,10 @@ export const constantRoutes = [
     path: '/profile',
     component: Layout,
     children: [{
+      name: 'Profile',
       path: 'index',
       component: () => import('@/views/profile/index'),
-      meta: { title: 'Profile', icon: 'profile' }
+      meta: { title: 'Profile', icon: 'user' }
     }]
   },
   {
