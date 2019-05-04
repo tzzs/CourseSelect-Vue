@@ -39,7 +39,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column min-width="300px" label="上课时间">
+        <el-table-column min-width="300px" align="center" label="上课时间">
           <template slot-scope="scope">
             <span>{{ scope.row.time }}</span>
           </template>

@@ -1,9 +1,8 @@
 <template>
-  <div class="container">
+  <div class="container" id="app">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="基本信息" name="first">
         <div class="base_info">
-          <!--    行1      -->
           <el-row :gutter="24">
             <el-col :span="2" :offset="5">
               <el-upload
@@ -28,7 +27,7 @@
                 <el-col :span="7">
                   <span class="name" style="margin-top: 1%;display: block">
                     欺负小虫子
-                    <svg-icon icon-class="woman"></svg-icon>
+                    <svg-icon icon-class="woman"/>
                   </span>
                 </el-col>
                 <el-col :span="7">
@@ -66,6 +65,10 @@
               <span class="name">班级：115030703</span>
             </el-col>
           </el-row>
+          <el-row></el-row>
+          <el-row></el-row>
+          <el-row></el-row>
+          <el-row></el-row>
         </div>
       </el-tab-pane>
       <el-tab-pane label="安全信息" name="second">
@@ -94,28 +97,27 @@
           <el-row :gutter="24" style="margin-top: 7%">
             <el-col :span="14" :offset="3">
               <span class="page2">验证邮箱：1789803837@qq.com</span>
-              <div class="divider-line"></div>
+              <div class="divider-line"/>
             </el-col>
           </el-row>
           <el-row :gutter="24" style="margin-top: 3%">
             <el-col :span="14" :offset="3">
               <span class="page2">手机绑定：173****4176</span>
               <a href="" style="color: #409EFF;">&nbsp;&nbsp;修改</a>
-              <div class="divider-line"></div>
+              <div class="divider-line"/>
             </el-col>
           </el-row>
           <el-row :gutter="24" style="margin-top: 3%">
             <el-col :span="14" :offset="3">
               <span class="page2">账户密码：</span>
               <a href="" style="color: #409EFF;">修改密码</a>
-              <div class="divider-line"></div>
+              <div class="divider-line"/>
             </el-col>
           </el-row>
         </div>
       </el-tab-pane>
       <el-tab-pane label="信息修改" name="third">
-        <div class="base_info">
-        </div>
+        <div class="base_info"/>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -169,12 +171,7 @@ export default {
     margin: 10px 30px;
   }
 
-  .form {
-    width: 60%;
-  }
-
   .base_info {
-    height: 100%;
     margin: 1% 2% 2% 1%;
     padding: 2%;
     /*box-shadow: 2px 2px 3px #aaaaaa;*/
