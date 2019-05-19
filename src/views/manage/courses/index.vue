@@ -11,7 +11,7 @@
       >
         <el-table-column align="center" label="ID">
           <template slot-scope="scope">
-            <el-checkbox :label="scope.row.id" />
+            <el-checkbox :label="scope.row.id"/>
           </template>
         </el-table-column>
 

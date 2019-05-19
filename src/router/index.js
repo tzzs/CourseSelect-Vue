@@ -90,13 +90,13 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/course',
+    path: '/courses',
     component: Layout,
     children: [
       {
         path: 'index',
         name: 'Course',
-        component: () => import('@/views/course/index'),
+        component: () => import('@/views/courses/index'),
         meta: { title: 'Course', icon: 'list' }
       }
     ]
@@ -122,6 +122,12 @@ export const constantRoutes = [
         name: 'Student',
         component: () => import('@/views/manage/students'),
         meta: { title: 'Students Manage', icon: 'student' }
+      },
+      {
+        path: 'courses',
+        name: 'Course',
+        component: () => import('@/views/manage/courses'),
+        meta: { title: 'Course Manage', icon: 'college' }
       },
       {
         path: 'college',
