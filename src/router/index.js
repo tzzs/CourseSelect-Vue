@@ -140,6 +140,12 @@ export const constantRoutes = [
         name: 'Class',
         component: () => import('@/views/manage/students'),
         meta: { title: 'Class Manage', icon: 'class' }
+      },
+      {
+        path: 'test',
+        name: 'Test',
+        component: () => import('@/views/manage/test'),
+        meta: { title: 'TEST', icon: 'class' }
       }
     ]
   },
