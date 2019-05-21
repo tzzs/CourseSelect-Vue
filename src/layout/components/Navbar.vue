@@ -1,15 +1,14 @@
 <template>
   <div class="navbar">
-    <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar"/>
+    <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
 
-    <breadcrumb class="breadcrumb-container"/>
+    <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
       <!--  工具栏    -->
       <template v-if="device!=='mobile'">
-        <screenfull id="screenfull" class="right-menu-item hover-effect"></screenfull>
-        <lang-select class="right-menu-item hover-effect"></lang-select>
-      </template>
+        <screenfull id="screenfull" class="right-menu-item hover-effect" />
+        <lang-select class="right-menu-item hover-effect" /></template>
       <!--  头像    -->
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
@@ -28,7 +27,7 @@
           <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
             <el-dropdown-item>Docs</el-dropdown-item>
           </a>
-          <router-link to="/account"></router-link>
+          <router-link to="/account" />
           <el-dropdown-item divided>
             <span style="display:block;" @click="logout">Log Out</span>
           </el-dropdown-item>
