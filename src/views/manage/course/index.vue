@@ -68,7 +68,7 @@
         <template slot-scope="scope">
           <el-dropdown>
             <span class="el-dropdown-link">
-              Date<i class="el-icon-arrow-down el-icon--right" />
+              时间列表<i class="el-icon-arrow-down el-icon--right" />
             </span>
 
             <el-dropdown-menu
