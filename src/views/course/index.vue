@@ -9,7 +9,7 @@
         highlight-current-row
         style="width: 100%"
       >
-        <el-table-column align="center" label="ID">
+        <el-table-column align="center" sortable="custom" label="ID">
           <template slot-scope="scope">
             <el-checkbox :label="scope.row.id" />
           </template>

@@ -9,12 +9,15 @@ for (let i = 0; i < count; i++) {
     'name': '@title',
     'period': '@integer(10,20)',
     'credit': '@integer(2,8)',
-    'semester': '@date(yy-MM)',
+    'semester': '@integer(1,10)',
     'teacher': '@first',
     'stu_number': '@integer(40,120)',
     'time|1-16': [{
       'date': '@date(yy-MM-dd)'
-    }]
+    }],
+    'college': 'title',
+    'rate': '@integer(1,10)',
+    'reviewer': '@first'
   }))
 }
 export default [{
@@ -30,7 +33,7 @@ export default [{
       return true
     })
 
-    if (sort === '-cnumber') {
+    if (sort === '-id') {
       mockList = mockList.reverse()
     }
 
@@ -42,6 +45,38 @@ export default [{
         total: mockList.length,
         items: pageList
       }
+    }
+  }
+}, {
+  url: '/course/detail',
+  type: 'get',
+  response: config => {
+    const { id } = config.query
+    for (const course of List) {
+      if (course.id === +id) {
+        return {
+          code: 20000,
+          data: course
+        }
+      }
+    }
+  }
+}, {
+  url: '/course/create',
+  type: 'post',
+  response: _ => {
+    return {
+      code: 20000,
+      data: 'success'
+    }
+  }
+}, {
+  url: '/course/upate',
+  type: 'post',
+  response: _ => {
+    return {
+      code: 20000,
+      data: 'success'
     }
   }
 }]

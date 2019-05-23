@@ -7,3 +7,27 @@ export function fetchList(query) {
     params: query
   })
 }
+
+export function fetchCourse(id) {
+  return request({
+    url: '/course/detail',
+    method: 'get',
+    params: { id }
+  })
+}
+
+export function createCouse(data) {
+  return request({
+    url: '/course/create',
+    method: 'post',
+    data
+  })
+}
+
+export function updateCourse(data) {
+  return request({
+    url: '/course/update',
+    method: 'post',
+    data
+  })
+}
