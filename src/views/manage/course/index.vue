@@ -85,14 +85,19 @@
           <span style="color:red;">{{ scope.row.reviewer }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="评分" width="80px">
+      <!-- todo 只读分数展示允许半星-->
+      <el-table-column label="评分" width="100px">
         <template slot-scope="scope">
           <svg-icon v-for="n in +scope.row.rate" :key="n" icon-class="star" class="meta-item__icon" />
         </template>
       </el-table-column>
       <el-table-column label="人数" align="center" width="95">
         <template slot-scope="{row}">
-          <span v-if="row.stu_number" class="link-type" @click="handleFetchPv(row.stu_number)">{{ row.stu_number }}</span>
+          <span
+            v-if="row.stu_number"
+            class="link-type"
+            @click="handleFetchPv(row.stu_number)"
+          >{{ row.stu_number }}</span>
           <span v-else>0</span>
         </template>
       </el-table-column>
@@ -134,6 +139,7 @@
       @pagination="getList"
     />
 
+    <!--todo 修改弹窗内容-->
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form
         ref="dataForm"
@@ -407,17 +413,17 @@ export default {
     },
     handleDownload() {
       this.downloadLoading = true
-      import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-        const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
-        const data = this.formatJson(filterVal, this.list)
-        excel.export_json_to_excel({
-          header: tHeader,
-          data,
-          filename: 'table-list'
+        import('@/vendor/Export2Excel').then(excel => {
+          const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
+          const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
+          const data = this.formatJson(filterVal, this.list)
+          excel.export_json_to_excel({
+            header: tHeader,
+            data,
+            filename: 'table-list'
+          })
+          this.downloadLoading = false
         })
-        this.downloadLoading = false
-      })
     },
     formatJson(filterVal, jsonData) {
       return jsonData.map(v => filterVal.map(j => {
