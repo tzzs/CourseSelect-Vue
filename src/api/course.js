@@ -16,6 +16,14 @@ export function fetchCourse(id) {
   })
 }
 
+export function fetchPv(pv) {
+  return request({
+    url: '/course/pv',
+    method: 'get',
+    params: { pv }
+  })
+}
+
 export function createCouse(data) {
   return request({
     url: '/course/create',

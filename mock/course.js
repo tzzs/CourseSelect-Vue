@@ -16,8 +16,9 @@ for (let i = 0; i < count; i++) {
       'date': '@date(yy-MM-dd)'
     }],
     'college': 'title',
-    'rate': '@integer(1,10)',
-    'reviewer': '@first'
+    'rate': '@integer(1,5)',
+    'reviewer': '@first',
+    'status|1': ['Optional', 'NotOptional']
   }))
 }
 export default [{
@@ -58,6 +59,22 @@ export default [{
           code: 20000,
           data: course
         }
+      }
+    }
+  }
+}, {
+  url: '/article/pv',
+  type: 'get',
+  response: _ => {
+    return {
+      code: 20000,
+      data: {
+        pvData: [
+          { key: 'PC', pv: 1024 },
+          { key: 'mobile', pv: 1024 },
+          { key: 'ios', pv: 1024 },
+          { key: 'android', pv: 1024 }
+        ]
       }
     }
   }
