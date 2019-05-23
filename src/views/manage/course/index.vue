@@ -108,7 +108,7 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="Actions" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="Actions" align="center" class-name="small-padding fixed-width" width="250px">
         <template slot-scope="{row}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
