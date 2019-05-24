@@ -328,7 +328,7 @@ export default {
       })
     },
     timeSort(list) {
-      console.log(list)
+      // console.log(list)
       return list.slice().sort((a, b) => {
         return Date.parse(a.date) - Date.parse(b.date)
       })
