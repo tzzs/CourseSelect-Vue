@@ -274,13 +274,20 @@ export default {
       statusOptions: ['Optional', 'NotOptional'],
       showReviewer: false,
       temp: {
-        id: undefined,
-        importance: 1,
-        remark: '',
-        timestamp: new Date(),
-        title: '',
-        type: '',
-        status: 'published'
+        // id: undefined,
+        // importance: 1,
+        // remark: '',
+        // timestamp: new Date(),
+        // title: '',
+        // type: '',
+        // status: 'published'
+        name: '',
+        credit: '',
+        teacher: '',
+        stu_number: '',
+        semester: '',
+        status: '',
+        rate: '3'
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -351,13 +358,13 @@ export default {
     },
     resetTemp() {
       this.temp = {
-        id: undefined,
-        importance: 1,
-        remark: '',
-        timestamp: new Date(),
-        title: '',
-        status: 'published',
-        type: ''
+        name: '',
+        credit: '',
+        teacher: '',
+        stu_number: '',
+        semester: '',
+        status: '',
+        rate: '3'
       }
     },
     handleCreate() {
@@ -371,8 +378,6 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-          this.temp.author = 'vue-element-admin'
           createCourse(this.temp).then(() => {
             this.list.unshift(this.temp)
             this.dialogFormVisible = false

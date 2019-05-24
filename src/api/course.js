@@ -24,7 +24,7 @@ export function fetchPv(pv) {
   })
 }
 
-export function createCouse(data) {
+export function createCourse(data) {
   return request({
     url: '/course/create',
     method: 'post',
