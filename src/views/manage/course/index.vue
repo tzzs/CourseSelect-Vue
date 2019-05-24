@@ -115,9 +115,9 @@
             >
               <el-dropdown-item
                 v-for="t of scope.row.time"
-                :key="t.date"
+                :key="t.week"
                 disabled
-              >{{ t.date }}-{{ t.lesson }}</el-dropdown-item>
+              >{{ t.weeks }}周-星期{{ t.week }}-{{ t.lesson }}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
 
@@ -314,7 +314,8 @@ export default {
       fetchList(this.listQuery).then(response => {
         const items = response.data.items
         for (const i in items) {
-          items[i].time = this.timeSort(items[i].time)
+          // items[i].time = this.timeSort(items[i].time)
+          items[i].time = this.sortByWeeks(items[i].time)
         }
         // console.log(items)
         this.list = items
@@ -329,6 +330,22 @@ export default {
       // console.log(list)
       return list.slice().sort((a, b) => {
         return Date.parse(a.date) - Date.parse(b.date)
+      })
+    },
+    sortByWeeks(list) {
+      return list.sort((a, b) => {
+        if (a.weeks < b.weeks) {
+          return -1
+        } else if (a.weeks === b.weeks) {
+          if (a.week < b.week) {
+            return -1
+          } else {
+            return 1
+          }
+        } else {
+          return 1
+        }
+        // return a.weeks - b.weeks
       })
     },
     handleFilter() {

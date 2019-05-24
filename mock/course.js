@@ -14,6 +14,8 @@ for (let i = 0; i < count; i++) {
     'stu_number': '@integer(40,120)',
     'time|1-16': [{
       'date': '@date(yyyy-MM-dd)',
+      'weeks': '@integer(1,20)',
+      'week': '@integer(1,7)',
       'lesson': '@integer(1,5)'
     }],
     'college': '@title',
