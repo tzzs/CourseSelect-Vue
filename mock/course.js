@@ -16,7 +16,7 @@ for (let i = 0; i < count; i++) {
       'date': '@date(yyyy-MM-dd)',
       'lesson': '@integer(1,5)'
     }],
-    'college': 'title',
+    'college': '@title',
     'rate': '@integer(1,5)',
     'reviewer': '@first',
     'status|1': ['Optional', 'NotOptional']
