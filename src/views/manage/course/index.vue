@@ -64,12 +64,50 @@
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
+
+      <el-table-column label="课程" min-width="150px">
+        <template slot-scope="{row}">
+          <span class="link-type" @click="handleUpdate(row)">{{ row.name }}</span>
+          <!--          <el-tag>{{ row.type | typeFilter }}</el-tag>-->
+        </template>
+      </el-table-column>
+      <el-table-column label="教师" width="110px" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.teacher }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="学分" width="110px" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.credit }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column v-if="showReviewer" label="Reviewer" width="110px" align="center">
+        <template slot-scope="scope">
+          <span style="color:red;">{{ scope.row.reviewer }}</span>
+        </template>
+      </el-table-column>
+      <!-- todo 只读分数展示允许半星-->
+      <el-table-column label="评分" width="110px">
+        <template slot-scope="scope">
+          <svg-icon v-for="n in +scope.row.rate" :key="n" icon-class="star" class="meta-item__icon" />
+        </template>
+      </el-table-column>
+      <el-table-column label="人数" align="center" width="95">
+        <template slot-scope="{row}">
+          <span
+            v-if="row.stu_number"
+            class="link-type"
+            @click="handleFetchPv(row.stu_number)"
+          >{{ row.stu_number }}</span>
+          <span v-else>0</span>
+        </template>
+      </el-table-column>
       <el-table-column label="Date" width="150px" align="center">
         <template slot-scope="scope">
           <el-dropdown>
             <!--TODO 时间进行排序-->
             <span class="el-dropdown-link">
-              时间列表<i class="el-icon-arrow-down el-icon--right" />
+              学时：{{ scope.row.period }}<i class="el-icon-arrow-down el-icon--right" />
             </span>
 
             <el-dropdown-menu
@@ -83,38 +121,6 @@
             </el-dropdown-menu>
           </el-dropdown>
 
-        </template>
-      </el-table-column>
-      <el-table-column label="课程" min-width="150px">
-        <template slot-scope="{row}">
-          <span class="link-type" @click="handleUpdate(row)">{{ row.name }}</span>
-          <!--          <el-tag>{{ row.type | typeFilter }}</el-tag>-->
-        </template>
-      </el-table-column>
-      <el-table-column label="教师" width="110px" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.teacher }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column v-if="showReviewer" label="Reviewer" width="110px" align="center">
-        <template slot-scope="scope">
-          <span style="color:red;">{{ scope.row.reviewer }}</span>
-        </template>
-      </el-table-column>
-      <!-- todo 只读分数展示允许半星-->
-      <el-table-column label="评分" width="100px">
-        <template slot-scope="scope">
-          <svg-icon v-for="n in +scope.row.rate" :key="n" icon-class="star" class="meta-item__icon" />
-        </template>
-      </el-table-column>
-      <el-table-column label="人数" align="center" width="95">
-        <template slot-scope="{row}">
-          <span
-            v-if="row.stu_number"
-            class="link-type"
-            @click="handleFetchPv(row.stu_number)"
-          >{{ row.stu_number }}</span>
-          <span v-else>0</span>
         </template>
       </el-table-column>
       <el-table-column label="状态" class-name="status-col" width="100">
