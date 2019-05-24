@@ -117,7 +117,7 @@
                 v-for="t of scope.row.time"
                 :key="t.date"
                 disabled
-              >{{ t.date }}</el-dropdown-item>
+              >{{ t.date }}-{{ t.lesson }}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
 
