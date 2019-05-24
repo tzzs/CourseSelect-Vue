@@ -13,7 +13,7 @@ for (let i = 0; i < count; i++) {
     'teacher': '@first',
     'stu_number': '@integer(40,120)',
     'time|1-16': [{
-      'date': '@date(yy-MM-dd)'
+      'date': '@date(yyyy-MM-dd)'
     }],
     'college': 'title',
     'rate': '@integer(1,5)',

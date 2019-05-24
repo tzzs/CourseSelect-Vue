@@ -314,12 +314,23 @@ export default {
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
-        this.list = response.data.items
+        const items = response.data.items
+        for (const i in items) {
+          items[i].time = this.timeSort(items[i].time)
+        }
+        // console.log(items)
+        this.list = items
         this.total = response.data.total
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false
         }, 1.5 * 1000)
+      })
+    },
+    timeSort(list) {
+      console.log(list)
+      return list.slice().sort((a, b) => {
+        return Date.parse(a.date) - Date.parse(b.date)
       })
     },
     handleFilter() {
