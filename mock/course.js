@@ -89,7 +89,7 @@ export default [{
     }
   }
 }, {
-  url: '/course/upate',
+  url: '/course/update',
   type: 'post',
   response: _ => {
     return {
