@@ -71,28 +71,28 @@
           <!--          <el-tag>{{ row.type | typeFilter }}</el-tag>-->
         </template>
       </el-table-column>
-      <el-table-column label="教师" width="110px" align="center">
+      <el-table-column label="教师" width="100" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.teacher }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="学分" width="110px" align="center">
+      <el-table-column label="学分" width="100" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.credit }}</span>
         </template>
       </el-table-column>
-      <el-table-column v-if="showReviewer" label="Reviewer" width="110px" align="center">
+      <el-table-column v-if="showReviewer" label="Reviewer" width="100" align="center">
         <template slot-scope="scope">
           <span style="color:red;">{{ scope.row.reviewer }}</span>
         </template>
       </el-table-column>
       <!-- todo 只读分数展示允许半星-->
-      <el-table-column label="评分" width="110px">
+      <el-table-column label="评分" width="100">
         <template slot-scope="scope">
           <svg-icon v-for="n in +scope.row.rate" :key="n" icon-class="star" class="meta-item__icon" />
         </template>
       </el-table-column>
-      <el-table-column label="人数" align="center" width="95">
+      <el-table-column label="人数" align="center" width="100">
         <template slot-scope="{row}">
           <span
             v-if="row.stu_number"
@@ -102,7 +102,7 @@
           <span v-else>0</span>
         </template>
       </el-table-column>
-      <el-table-column label="Date" width="150px" align="center">
+      <el-table-column label="Date" width="110" align="center">
         <template slot-scope="scope">
           <el-dropdown>
             <span class="el-dropdown-link">
@@ -121,14 +121,14 @@
 
         </template>
       </el-table-column>
-      <el-table-column label="状态" class-name="status-col" width="100">
+      <el-table-column label="状态" class-name="status-col" width="110">
         <template slot-scope="{row}">
           <el-tag :type="row.status | statusFilter">
             {{ row.status }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="Actions" align="center" class-name="small-padding fixed-width" width="250px">
+      <el-table-column label="Actions" align="center" class-name="small-padding fixed-width" width="240">
         <template slot-scope="{row}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
@@ -336,7 +336,6 @@ export default {
         } else {
           return 1
         }
-        // return a.weeks - b.weeks
       })
     },
     handleFilter() {
