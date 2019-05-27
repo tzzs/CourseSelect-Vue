@@ -26,9 +26,9 @@
           :value="item"
         />
       </el-select>
-<!--      <el-select v-model="listQuery.sort" style="width: 150px" class="filter-item" @change="handleFilter">-->
-<!--        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />-->
-<!--      </el-select>-->
+      <!--      <el-select v-model="listQuery.sort" style="width: 150px" class="filter-item" @change="handleFilter">-->
+      <!--        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />-->
+      <!--      </el-select>-->
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
       </el-button>
@@ -51,7 +51,7 @@
       >
         Export
       </el-button>
-      <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
+      <el-checkbox v-model="showHidden" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
         reviewer
       </el-checkbox>
     </div>
@@ -83,16 +83,22 @@
           <span>{{ scope.row.teacher }}</span>
         </template>
       </el-table-column>
+      <el-table-column v-if="showHidden" label="Reviewer" width="100" align="center">
+        <template slot-scope="scope">
+          <span style="color:red;">{{ scope.row.reviewer }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column v-if="showHidden" label="学期" align="center">
+      <template slot-scope="scope">
+        <span>{{ scope.row.semester }}</span>
+      </template>
+    </el-table-column>
       <el-table-column label="学分" width="100" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.credit }}</span>
         </template>
       </el-table-column>
-      <el-table-column v-if="showReviewer" label="Reviewer" width="100" align="center">
-        <template slot-scope="scope">
-          <span style="color:red;">{{ scope.row.reviewer }}</span>
-        </template>
-      </el-table-column>
+
       <!-- todo 只读分数展示允许半星-->
       <el-table-column label="评分" width="100">
         <template slot-scope="scope">
@@ -115,7 +121,6 @@
             <span class="el-dropdown-link">
               学时：{{ scope.row.period }}<i class="el-icon-arrow-down el-icon--right" />
             </span>
-
             <el-dropdown-menu
               slot="dropdown"
             >
@@ -277,7 +282,8 @@ export default {
       calendarTypeOptions,
       sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
       statusOptions: ['Optional', 'NotOptional'],
-      showReviewer: false,
+      showHidden: false,
+      showSemester: false,
       temp: {
         name: '',
         credit: '',
