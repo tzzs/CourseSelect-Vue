@@ -1,6 +1,5 @@
 <template>
   <div class="app-container">
-    <!--    <el-checkbox-group v-model="checkList">-->
     <el-table
       ref="multipleTable"
       v-loading="listLoading"
@@ -17,9 +16,8 @@
         width="55"
         align="center"
       />
-      <el-table-column align="center" sortable="custom" label="ID">
+      <el-table-column align="center" sortable="custom" label="ID" width="80">
         <template slot-scope="scope">
-          <!--            <el-checkbox :label="scope.row.id" />-->
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
@@ -35,7 +33,31 @@
           <span>{{ scope.row.teacher }}</span>
         </template>
       </el-table-column>
-
+      <el-table-column v-if="showHidden" label="学期" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.semester }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="评分" width="100">
+        <template slot-scope="scope">
+          <svg-icon v-for="n in +scope.row.rate" :key="n" icon-class="star" class="meta-item__icon" />
+        </template>
+      </el-table-column>
+      <el-table-column label="人数" align="center" width="100">
+        <template slot-scope="{row}">
+          <span
+            v-if="row.stu_number"
+            class="link-type"
+            @click="handleFetchPv(row.stu_number)"
+          >{{ row.stu_number }}</span>
+          <span v-else>0</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="学分" width="100" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.credit }}</span>
+        </template>
+      </el-table-column>
       <el-table-column width="100px" align="center" label="学时">
         <template slot-scope="scope">
           <span>{{ scope.row.period }}</span>
@@ -48,22 +70,33 @@
         </template>
       </el-table-column>
 
-      <el-table-column min-width="300px" align="center" label="上课时间">
+      <el-table-column align="center" label="上课时间">
         <template slot-scope="scope">
-          <span>{{ scope.row.time[0] }}</span>
+          <!--          <span>{{ scope.row.time[0] }}</span>-->
+          <el-dropdown>
+            <span class="el-dropdown-link">
+              学时：{{ scope.row.period }}<i class="el-icon-arrow-down el-icon--right" />
+            </span>
+            <el-dropdown-menu
+              slot="dropdown"
+            >
+              <el-dropdown-item
+                v-for="t of scope.row.time"
+                disabled
+              >{{ t.weeks }}周-星期{{ t.week }}-{{ t.lesson }}</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="Actions" width="120">
-        <template slot-scope="scope">
-          <router-link :to="'/example/edit/'+scope.row.id">
-            <el-button type="primary" size="small" icon="el-icon-edit">Edit</el-button>
-          </router-link>
-        </template>
-        <!-- <el-checkbox label></el-checkbox> -->
-      </el-table-column>
+      <!--      <el-table-column align="center" label="Actions" width="120">-->
+      <!--        <template slot-scope="scope">-->
+      <!--          <router-link :to="'/example/edit/'+scope.row.id">-->
+      <!--            <el-button type="primary" size="small" icon="el-icon-edit">Edit</el-button>-->
+      <!--          </router-link>-->
+      <!--        </template>-->
+      <!--      </el-table-column>-->
     </el-table>
-    <!--    </el-checkbox-group>-->
 
     <pagination
       v-show="total>0"
@@ -121,11 +154,29 @@ export default {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
         this.list = response.data.items
+        const items = this.list
+        for (const i in items) {
+          items[i].time = this.sortByWeeks(items[i].time)
+        }
+        this.list = items
         this.total = response.data.total
         this.listLoading = false
       })
-    },
-    open() {
+    }, sortByWeeks(list) {
+      return list.sort((a, b) => {
+        if (a.weeks < b.weeks) {
+          return -1
+        } else if (a.weeks === b.weeks) {
+          if (a.week < b.week) {
+            return -1
+          } else {
+            return 1
+          }
+        } else {
+          return 1
+        }
+      })
+    }, open() {
       this.$confirm('当前选择科目：' + this.count + '  总学分：' + this.count, '提交', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

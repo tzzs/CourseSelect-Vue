@@ -89,10 +89,10 @@
         </template>
       </el-table-column>
       <el-table-column v-if="showHidden" label="学期" align="center">
-      <template slot-scope="scope">
-        <span>{{ scope.row.semester }}</span>
-      </template>
-    </el-table-column>
+        <template slot-scope="scope">
+          <span>{{ scope.row.semester }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="学分" width="100" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.credit }}</span>
@@ -130,7 +130,6 @@
               >{{ t.weeks }}周-星期{{ t.week }}-{{ t.lesson }}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
-
         </template>
       </el-table-column>
       <el-table-column label="状态" class-name="status-col" width="110">
