@@ -28,7 +28,7 @@ export default [{
   url: '/course/list',
   type: 'get',
   response: config => {
-    const { rate, status, name, page = 1, limit = 20, sort, credit } = config.query
+    const { rate, status, name, page = 1, limit = 10, sort, credit } = config.query
 
     // 处理过滤查找
     let mockList = List.filter(item => {
