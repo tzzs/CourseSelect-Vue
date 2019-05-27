@@ -52,7 +52,7 @@
         Export
       </el-button>
       <el-checkbox v-model="showHidden" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
-        reviewer
+        ShowHidden
       </el-checkbox>
     </div>
 
