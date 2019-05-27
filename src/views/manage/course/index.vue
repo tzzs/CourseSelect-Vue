@@ -59,7 +59,7 @@
       style="width: 100%;"
       @sort-change="sortChange"
     >
-      <el-table-column label="ID" prop="id" sortable="custom" align="center" width="80">
+      <el-table-column label="ID" prop="id" sortable align="center" width="80">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
         </template>
@@ -105,7 +105,6 @@
       <el-table-column label="Date" width="150px" align="center">
         <template slot-scope="scope">
           <el-dropdown>
-            <!--TODO 时间进行排序-->
             <span class="el-dropdown-link">
               学时：{{ scope.row.period }}<i class="el-icon-arrow-down el-icon--right" />
             </span>
@@ -115,7 +114,6 @@
             >
               <el-dropdown-item
                 v-for="t of scope.row.time"
-                :key="t.week"
                 disabled
               >{{ t.weeks }}周-星期{{ t.week }}-{{ t.lesson }}</el-dropdown-item>
             </el-dropdown-menu>
@@ -146,7 +144,7 @@
           <el-button v-if="row.status!='NotOptional'" size="mini" @click="handleModifyStatus(row,'NotOptional')">
             不可选
           </el-button>
-          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleModifyStatus(row,'deleted')">
+          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row)">
             Delete
           </el-button>
         </template>
@@ -274,20 +272,13 @@ export default {
       statusOptions: ['Optional', 'NotOptional'],
       showReviewer: false,
       temp: {
-        // id: undefined,
-        // importance: 1,
-        // remark: '',
-        // timestamp: new Date(),
-        // title: '',
-        // type: '',
-        // status: 'published'
         name: '',
         credit: '',
         teacher: '',
         stu_number: '',
         semester: '',
         status: '',
-        rate: '3'
+        rate: 3
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -381,7 +372,7 @@ export default {
         stu_number: '',
         semester: '',
         status: '',
-        rate: '3'
+        rate: 3
       }
     },
     handleCreate() {
