@@ -30,7 +30,7 @@ export default [{
 }, {
   url: '/student/updateInfo',
   type: 'post',
-  respose: config => {
+  response: config => {
     return {
       code: 20000,
       data: {

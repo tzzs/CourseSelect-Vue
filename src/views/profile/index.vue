@@ -153,7 +153,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { fetchInfo } from '../../api/student'
+import { fetchInfo, updateInfo } from '../../api/student'
 // import PanThumb from '@/components/PanThumb'
 
 export default {
@@ -192,6 +192,9 @@ export default {
     onSubmit() {
       console.log(JSON.stringify(this.form))
       console.log('submit!')
+      updateInfo(this.form).then(response => {
+        this.$message(response.data.message)
+      })
     },
     getInfo() {
       fetchInfo().then(response => {
