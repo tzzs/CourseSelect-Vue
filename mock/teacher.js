@@ -22,18 +22,14 @@ export default [{
   url: '/teacher/list',
   type: 'get',
   response: config => {
-    const { page = 1, limit = 10, sort, title, college, name } = config.query
+    const { page = 1, limit = 10, title, college, name } = config.query
 
-    let mockList = List.filter(item => {
+    const mockList = List.filter(item => {
       if (name && item.name.toLowerCase().indexOf(name.toLowerCase()) < 0) return false
       if (title && item.title.toLowerCase().indexOf(title.toLowerCase()) < 0) return false
       if (college && item.college.toLowerCase().indexOf(college.toLowerCase()) < 0) return false
       return true
     })
-
-    if (sort === '-id') {
-      mockList = mockList.reverse()
-    }
 
     const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
 

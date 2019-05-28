@@ -64,12 +64,12 @@
           <span>{{ scope.row.teaid }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="姓名" width="100" align="center">
+      <el-table-column label="姓名" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column v-if="showHidden" label="职称" width="100" align="center">
+      <el-table-column v-if="showHidden" label="职称" align="center">
         <template slot-scope="scope">
           <span style="color:red;">{{ scope.row.title }}</span>
         </template>
@@ -79,7 +79,7 @@
           <span>{{ scope.row.email }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="电话" width="100">
+      <el-table-column label="电话" >
         <template slot-scope="scope">
           <span>{{ scope.row.phone }}</span>
         </template>
@@ -89,7 +89,7 @@
           <span>{{ row.college }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Actions" align="center" class-name="small-padding fixed-width" width="240">
+      <el-table-column label="Actions" align="center" class-name="small-padding fixed-width" min-width="160">
         <template slot-scope="{row}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
@@ -239,7 +239,7 @@ export default {
       fetchList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data.total
-        console.log(this.list)
+        // console.log(this.list)
 
         // Just to simulate the time of the request
         setTimeout(() => {
