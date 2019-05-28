@@ -3,26 +3,25 @@
     <div class="filter-container">
       <el-input
         v-model="listQuery.name"
-        placeholder="Name"
-        style="width: 200px;"
+        placeholder="姓名"
+        style="width: 150px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
       <el-input
-        v-model="listQuery.credit"
-        placeholder="Credit"
-        style="width: 100px;"
+        v-model="listQuery.title"
+        placeholder="职称"
+        style="width: 150px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
-      <el-select v-model="listQuery.status" placeholder="Status" clearable class="filter-item" style="width: 130px">
-        <el-option
-          v-for="item in statusOptions"
-          :key="item"
-          :label="item"
-          :value="item"
-        />
-      </el-select>
+      <el-input
+        v-model="listQuery.college"
+        placeholder="学院"
+        style="width: 150px"
+        class="filter-item"
+        @keyup.enter.native="handleFilter"
+      />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
       </el-button>
@@ -60,12 +59,6 @@
       style="width: 100%;"
       @sort-change="sortChange"
     >
-<!--      <el-table-column label="ID" prop="id" sortable align="center" fixed="">-->
-<!--        <template slot-scope="scope">-->
-<!--          <span>{{ scope.row.id }}</span>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
-
       <el-table-column label="教工号" prop="id" min-width="150px" sortable>
         <template slot-scope="scope">
           <span>{{ scope.row.teaid }}</span>
@@ -101,7 +94,7 @@
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
           </el-button>
-          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row)">
+          <el-button size="mini" type="danger" @click="handleDelete(row)">
             Delete
           </el-button>
         </template>
@@ -205,7 +198,10 @@ export default {
       listQuery: {
         page: 1,
         limit: 10,
-        sort: '+id'
+        sort: '+id',
+        title: undefined,
+        college: undefined,
+        name: undefined
       },
       sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
       statusOptions: ['Optional', 'NotOptional'],
@@ -243,6 +239,7 @@ export default {
       fetchList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data.total
+        console.log(this.list)
 
         // Just to simulate the time of the request
         setTimeout(() => {
