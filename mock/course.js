@@ -28,13 +28,14 @@ export default [{
   url: '/course/list',
   type: 'get',
   response: config => {
-    const { rate, status, name, page = 1, limit = 10, sort, credit } = config.query
+    const { rate, status, name, page = 1, limit = 10, sort, credit, remain } = config.query
 
     // 处理过滤查找
     let mockList = List.filter(item => {
       if (rate && item.rate !== +rate) return false
       if (status && item.status !== status) return false
       if (credit && item.credit !== +credit) return false
+      if (remain && item.stu_number === 0) return false
       if (name && item.name.indexOf(name) < 0) return false
       return true
     })
