@@ -1,5 +1,5 @@
 <template>
-  <div class="container" id="app">
+  <div id="app" class="container">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="基本信息" name="first">
         <div class="base_info">
@@ -27,7 +27,7 @@
                 <el-col :span="7">
                   <span class="name" style="margin-top: 1%;display: block">
                     欺负小虫子
-                    <svg-icon icon-class="woman"/>
+                    <svg-icon icon-class="woman" />
                   </span>
                 </el-col>
                 <el-col :span="7">
@@ -39,10 +39,10 @@
               </el-row>
               <el-row :gutter="24">
                 <el-col :span="7">
-                  <span class="font-small">账号ID：11503070338</span>
+                  <span class="font-small">账号ID：{{ info.stuid }}</span>
                 </el-col>
                 <el-col :span="7">
-                  <span class="font-small">注册时间：2019/4/24</span>
+                  <span class="font-small">注册时间：{{ info.regTime }}</span>
                 </el-col>
                 <el-col :span="4">
                   <span class="font-small">身份：学生</span>
@@ -52,23 +52,23 @@
           </el-row>
           <el-row :gutter="24" style="margin-top: 7%">
             <el-col :span="14" :offset="8">
-              <span class="name">学院：计算机科学与工程</span>
+              <span class="name">学院：{{ info.college }}</span>
             </el-col>
           </el-row>
           <el-row :gutter="24" style="margin-top: 3%">
             <el-col :span="14" :offset="8">
-              <span class="name">专业：计算机科学与技术</span>
+              <span class="name">专业：{{ info.profession }}</span>
             </el-col>
           </el-row>
           <el-row :gutter="24" style="margin-top: 3%">
             <el-col :span="14" :offset="8">
-              <span class="name">班级：115030703</span>
+              <span class="name">班级：{{ info.class }}</span>
             </el-col>
           </el-row>
-          <el-row></el-row>
-          <el-row></el-row>
-          <el-row></el-row>
-          <el-row></el-row>
+          <el-row />
+          <el-row />
+          <el-row />
+          <el-row />
         </div>
       </el-tab-pane>
       <el-tab-pane label="安全信息" name="second">
@@ -86,63 +86,128 @@
               </el-row>
               <el-row :gutter="24">
                 <el-col :span="7">
-                  <span class="font-small">账号ID：11503070338</span>
+                  <span class="font-small">账号ID：{{ info.stuid }}</span>
                 </el-col>
                 <el-col :span="7">
-                  <span class="font-small">上次登录时间：2019.4.24</span>
+                  <span class="font-small">上次登录时间：{{ info.lastTime }}</span>
                 </el-col>
               </el-row>
             </el-col>
           </el-row>
           <el-row :gutter="24" style="margin-top: 7%">
             <el-col :span="14" :offset="3">
-              <span class="page2">验证邮箱：1789803837@qq.com</span>
-              <div class="divider-line"/>
+              <span class="page2">验证邮箱：{{ info.email }}</span>
+              <div class="divider-line" />
             </el-col>
           </el-row>
           <el-row :gutter="24" style="margin-top: 3%">
             <el-col :span="14" :offset="3">
-              <span class="page2">手机绑定：173****4176</span>
+              <span class="page2">手机绑定：{{ info.phone }}</span>
               <a href="" style="color: #409EFF;">&nbsp;&nbsp;修改</a>
-              <div class="divider-line"/>
+              <div class="divider-line" />
             </el-col>
           </el-row>
           <el-row :gutter="24" style="margin-top: 3%">
             <el-col :span="14" :offset="3">
               <span class="page2">账户密码：</span>
               <a href="" style="color: #409EFF;">修改密码</a>
-              <div class="divider-line"/>
+              <div class="divider-line" />
             </el-col>
           </el-row>
         </div>
       </el-tab-pane>
       <el-tab-pane label="信息修改" name="third">
-        <div class="base_info"/>
+        <div class="base_info">
+          <el-form ref="form" :model="form" label-width="80px" :rules="rules">
+            <el-form-item label="昵称">
+              <el-input v-model="form.name" />
+            </el-form-item>
+            <el-form-item label="性别">
+              <el-radio v-model="form.sex" label="男">男</el-radio>
+              <el-radio v-model="form.sex" label="女">女</el-radio>
+            </el-form-item>
+            <el-form-item label="学院">
+              <el-input v-model="form.college" />
+            </el-form-item>
+            <el-form-item label="班级">
+              <el-input v-model="form.class" />
+            </el-form-item>
+            <el-form-item label="电话" prop="phone">
+              <el-input v-model="form.phone" />
+            </el-form-item>
+            <el-form-item
+              prop="email"
+              label="邮箱"
+            >
+              <el-input v-model="form.email" />
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit">更新</el-button>
+              <el-button>取消</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import PanThumb from '@/components/PanThumb'
+import { fetchInfo } from '../../api/student'
+// import PanThumb from '@/components/PanThumb'
 
 export default {
   name: 'Profile',
   data() {
     return {
       activeName: 'first',
+      imageUrl: this.$store.state.user.avatar,
+      info: {},
       form: {
-        id: '',
-        name: ''
+        name: '123',
+        sex: '1',
+        college: '',
+        class: '',
+        phone: '',
+        email: ''
       },
-      imageUrl: this.$store.state.user.avatar
+      rules: {
+        email: [
+          { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+        ],
+        phone: [
+          { type: 'number', message: '请输入正确的手机号码', trigger: ['blur', 'change'] }
+        ]
+      }
     }
   },
   computed: {
-    ...mapGetters(['avatar']),
-    PanThumb
+    ...mapGetters(['avatar'])
+    // PanThumb
+  },
+  created() {
+    this.getInfo()
   },
   methods: {
+    onSubmit() {
+      console.log(JSON.stringify(this.form))
+      console.log('submit!')
+    },
+    getInfo() {
+      fetchInfo().then(response => {
+        this.info = response.data.profile
+        this.info.stuid = this.info.stuid.substr(0, 11)
+        console.log(this.info)
+        this.form = {
+          name: this.info.name,
+          sex: this.info.sex,
+          college: this.info.college,
+          class: this.info.class,
+          phone: this.info.phone,
+          email: this.info.email
+        }
+      })
+    },
     handleClick(tab, event) {
       // console.log(tab, event)
     },

@@ -5,12 +5,14 @@ import user from './user'
 import table from './table'
 import artile from './article'
 import course from './course'
+import student from './student'
 
 const mocks = [
   ...user,
   ...table,
   ...artile,
-  ...course
+  ...course,
+  ...student
 ]
 
 // for front mock
