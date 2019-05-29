@@ -32,11 +32,19 @@ export function fetchDetail(id) {
   })
 }
 
+export function fetchPv(pv) {
+  return request({
+    url: '/student/pv',
+    method: 'get',
+    params: { pv }
+  })
+}
+
 export function createStudent(data) {
   return request({
     url: '/student/create',
     method: 'post',
-    params: data
+    data
   })
 }
 
@@ -44,6 +52,6 @@ export function updateStudent(data) {
   return request({
     url: '/student/update',
     method: 'post',
-    params: data
+    data
   })
 }

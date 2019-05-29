@@ -104,14 +104,28 @@ export default [{
     }
   }
 }, {
-  url: 'student/update',
+  url: '/student/update',
   type: 'post',
   response: _ => {
-    const data = _.query
-    console.log('student update:' + data)
     return {
       code: 20000,
       data: 'success'
+    }
+  }
+}, {
+  url: '/student/pv',
+  type: 'get',
+  response: _ => {
+    return {
+      code: 20000,
+      data: {
+        pvData: [
+          { key: 'PC', pv: 1024 },
+          { key: 'mobile', pv: 1024 },
+          { key: 'ios', pv: 1024 },
+          { key: 'android', pv: 1024 }
+        ]
+      }
     }
   }
 }]

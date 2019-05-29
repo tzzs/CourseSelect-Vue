@@ -117,14 +117,11 @@
         <el-form-item v-show="false" label="id" prop="id">
           <el-input v-model="temp.id" />
         </el-form-item>
-        <el-form-item label="教工号" prop="teaid">
-          <el-input v-model="temp.teaid" />
+        <el-form-item label="学号" prop="teaid">
+          <el-input v-model="temp.stuid" />
         </el-form-item>
         <el-form-item label="姓名" prop="name">
           <el-input v-model="temp.name" />
-        </el-form-item>
-        <el-form-item label="职称" prop="title">
-          <el-input v-model="temp.title" />
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="temp.email" />
@@ -134,6 +131,12 @@
         </el-form-item>
         <el-form-item label="学院" prop="college">
           <el-input v-model="temp.college" />
+        </el-form-item>
+        <el-form-item label="专业" prop="profession">
+          <el-input v-model="temp.profession" />
+        </el-form-item>
+        <el-form-item label="班级" prop="class">
+          <el-input v-model="temp.class" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -159,7 +162,7 @@
 </template>
 
 <script>
-import { fetchList, createStudent, updateStudent } from '@/api/student'
+import { fetchList, fetchPv, createStudent, updateStudent } from '@/api/student'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -194,12 +197,14 @@ export default {
       showHidden: false,
       showSemester: false,
       temp: {
+        id: '',
         name: '',
         stuid: '',
         email: '',
         phone: '',
         college: '',
-        title: ''
+        class: '',
+        profession: ''
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -210,7 +215,7 @@ export default {
       dialogPvVisible: false,
       pvData: [],
       rules: {
-        teaid: [{ required: true, message: 'teacher id is required', trigger: 'blur' }]
+        stuid: [{ required: true, message: 'teacher id is required', trigger: 'blur' }]
       },
       downloadLoading: false
     }
@@ -258,15 +263,17 @@ export default {
       }
       this.handleFilter()
     },
+    // todo 重置temp问题
     resetTemp() {
       this.temp = {
+        id: '',
         name: '',
-        credit: '',
-        teacher: '',
-        stu_number: '',
-        semester: '',
-        status: '',
-        rate: 3
+        stuid: '',
+        email: '',
+        phone: '',
+        college: '',
+        class: '',
+        profession: ''
       }
     },
     handleCreate() {
@@ -280,7 +287,7 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          createTeaher(this.temp).then(() => {
+          createStudent(this.temp).then(() => {
             this.list.unshift(this.temp)
             this.dialogFormVisible = false
             this.$notify({
@@ -305,9 +312,8 @@ export default {
     updateData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          const tempData = Object.assign({}, this.temp)
-          tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-          updateTeacher(tempData).then(() => {
+          const tempData = Object.assign({}, this.temp)// change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
+          updateStudent(tempData).then(() => {
             for (const v of this.list) {
               if (v.id === this.temp.id) {
                 const index = this.list.indexOf(v)
