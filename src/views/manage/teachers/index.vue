@@ -79,7 +79,7 @@
           <span>{{ scope.row.email }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="电话" >
+      <el-table-column label="电话">
         <template slot-scope="scope">
           <span>{{ scope.row.phone }}</span>
         </template>
@@ -119,33 +119,26 @@
         label-width="70px"
         style="width: 400px; margin-left:50px;"
       >
-        <el-form-item label="Title" prop="name">
+        <el-form-item v-show="false" label="id" prop="id">
+          <el-input v-model="temp.id" />
+        </el-form-item>
+        <el-form-item label="教工号" prop="teaid">
+          <el-input v-model="temp.teaid" />
+        </el-form-item>
+        <el-form-item label="姓名" prop="name">
           <el-input v-model="temp.name" />
         </el-form-item>
-        <el-form-item label="Credit" prop="credit">
-          <el-input v-model="temp.credit" />
+        <el-form-item label="职称" prop="title" >
+          <el-input v-model="temp.title" />
         </el-form-item>
-        <el-form-item label="Teacher" prop="teacher">
-          <el-input v-model="temp.teacher" />
+        <el-form-item label="邮箱" prop="email">
+          <el-input v-model="temp.email" />
         </el-form-item>
-        <el-form-item label="Number" prop="stu_number">
-          <el-input v-model="temp.stu_number" />
+        <el-form-item label="手机" prop="phone">
+          <el-input v-model="temp.phone" />
         </el-form-item>
-        <el-form-item label="Semester" prop="semester">
-          <el-input v-model="temp.semester" />
-        </el-form-item>
-        <el-form-item label="Status" prop="status">
-          <el-select v-model="temp.status" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="Rate" prop="rate">
-          <el-rate
-            v-model="temp.rate"
-            :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
-            :max="5"
-            style="margin-top:8px;"
-          />
+        <el-form-item label="学院" prop="college">
+          <el-input v-model="temp.college" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -209,12 +202,11 @@ export default {
       showSemester: false,
       temp: {
         name: '',
-        credit: '',
-        teacher: '',
-        stu_number: '',
-        semester: '',
-        status: '',
-        rate: 3
+        teaid: '',
+        email: '',
+        phone: '',
+        college: '',
+        title: ''
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -225,7 +217,7 @@ export default {
       dialogPvVisible: false,
       pvData: [],
       rules: {
-        title: [{ required: true, message: 'title is required', trigger: 'blur' }]
+        teaid: [{ required: true, message: 'teacher id is required', trigger: 'blur' }]
       },
       downloadLoading: false
     }
