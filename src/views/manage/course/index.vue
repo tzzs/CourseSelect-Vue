@@ -119,7 +119,7 @@
         <template slot-scope="scope">
           <el-dropdown>
             <span class="el-dropdown-link">
-              学时：{{ scope.row.period }}<i class="el-icon-arrow-down el-icon--right" />
+              学时：{{ scope.row.time.length }}<i class="el-icon-arrow-down el-icon--right" />
             </span>
             <el-dropdown-menu
               slot="dropdown"
