@@ -28,7 +28,7 @@ export default [{
     return {
       code: 20000,
       data: {
-        profile: List
+        profile: List[0]
       }
     }
   }

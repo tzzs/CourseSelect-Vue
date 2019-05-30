@@ -103,7 +103,7 @@
           <el-row :gutter="24" style="margin-top: 3%">
             <el-col :span="14" :offset="3">
               <span class="page2">手机绑定：{{ info.phone }}</span>
-              <a href="" style="color: #409EFF;">&nbsp;&nbsp;修改</a>
+              <!--              <a href="" style="color: #409EFF;">&nbsp;&nbsp;修改</a>-->
               <div class="divider-line" />
             </el-col>
           </el-row>
@@ -174,10 +174,10 @@ export default {
       rules: {
         email: [
           { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
-        ],
-        phone: [
-          { type: 'number', message: '请输入正确的手机号码', trigger: ['blur', 'change'] }
         ]
+        // phone: [
+        //   { type: 'number', message: '请输入正确的手机号码', trigger: ['blur', 'change'] }
+        // ]
       }
     }
   },
@@ -193,13 +193,15 @@ export default {
       console.log(JSON.stringify(this.form))
       console.log('submit!')
       updateInfo(this.form).then(response => {
+        for (const f in JSON.parse(JSON.stringify(this.form))) {
+          this.info[f] = this.form[f]
+        }
         this.$message(response.data.message)
       })
     },
     getInfo() {
       fetchInfo().then(response => {
         this.info = response.data.profile
-        this.info.stuid = this.info.stuid.substr(0, 11)
         console.log(this.info)
         this.form = {
           name: this.info.name,
