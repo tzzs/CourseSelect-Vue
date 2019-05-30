@@ -118,7 +118,7 @@
         label-width="70px"
         style="width: 400px; margin-left:50px;"
       >
-        <el-form-item v-show="false" label="id" prop="id">
+        <el-form-item v-show="dialogStatus==='create'" label="ID" prop="id">
           <el-input v-model="temp.id" />
         </el-form-item>
         <el-form-item label="教工号" prop="teaid">
@@ -127,7 +127,7 @@
         <el-form-item label="姓名" prop="name">
           <el-input v-model="temp.name" />
         </el-form-item>
-        <el-form-item label="职称" prop="title" >
+        <el-form-item label="职称" prop="title">
           <el-input v-model="temp.title" />
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
@@ -163,7 +163,7 @@
 </template>
 
 <script>
-import { fetchList, fetchPv, createTeaher, updateTeacher } from '@/api/teacher'
+import { fetchList, fetchPv, createTeacher, updateTeacher } from '@/api/teacher'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -285,7 +285,7 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          createTeaher(this.temp).then(() => {
+          createTeacher(this.temp).then(() => {
             this.list.unshift(this.temp)
             this.dialogFormVisible = false
             this.$notify({

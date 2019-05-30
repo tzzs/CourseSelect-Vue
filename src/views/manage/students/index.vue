@@ -287,12 +287,8 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          console.log(this.list)
-          console.log(this.temp)
-          console.log(JSON.stringify(this.temp))
           createStudent(this.temp).then(() => {
             this.list.unshift(this.temp)
-            console.log(this.list)
             this.dialogFormVisible = false
             this.$notify({
               title: 'Success',
