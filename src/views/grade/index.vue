@@ -10,9 +10,8 @@
       highlight-current-row
       style="width: 100%"
       tooltip-effect="dark"
-      @sort-change="sortChange"
     >
-      <el-table-column align="center" sortable label="ID">
+      <el-table-column align="center" label="ID">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
         </template>
@@ -112,30 +111,6 @@ export default {
         this.total = response.data.total
         this.listLoading = false
       })
-    }, handleFilter() {
-      this.listQuery.page = 1
-      this.getList()
-    }, sortChange(data) {
-      const { prop, order } = data
-      if (prop === 'id') {
-        this.sortByID(order)
-      }
-    }, sortByID(order) {
-      if (order === 'ascending') {
-        this.listQuery.sort = '+id'
-      } else {
-        this.listQuery.sort = '-id'
-      }
-      this.handleFilter()
-    },
-    toggleSelection(rows) {
-      if (rows) {
-        rows.forEach(row => {
-          this.$refs.multipleTable.toggleRowSelection(row)
-        })
-      } else {
-        this.$refs.multipleTable.clearSelection()
-      }
     }
   }
 }
