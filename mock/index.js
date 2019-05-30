@@ -7,6 +7,7 @@ import artile from './article'
 import course from './course'
 import student from './student'
 import teacher from './teacher'
+import elective from './elective'
 
 const mocks = [
   ...user,
@@ -14,7 +15,8 @@ const mocks = [
   ...artile,
   ...course,
   ...student,
-  ...teacher
+  ...teacher,
+  ...elective
 ]
 
 // for front mock
