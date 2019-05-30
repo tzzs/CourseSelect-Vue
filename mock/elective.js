@@ -27,11 +27,11 @@ export default [{
   type: 'get',
   response: config => {
     const { nameid, page = 1, limit = 10, sort, semester, credit } = config.query
-    console.log(config.query)
+    // console.log(config.query)
     // 处理过滤查找
     let mockList = List.filter(item => {
-      if (credit && item.credit !== +credit) return false
-      if (semester && item.semester !== semester) return false
+      if (credit && item.credit.toString() !== credit.toString()) return false
+      if (semester && item.semester.toString() !== semester.toString()) return false
       if (nameid && item.name.indexOf(nameid) < 0 && item.id.toString().indexOf(nameid) < 0) return false
       return true
     })
