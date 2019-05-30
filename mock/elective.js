@@ -1,7 +1,7 @@
 import Mock from 'mockjs'
 
 const List = []
-const count = 50
+const count = 20
 
 for (let i = 0; i < count; i++) {
   List.push(Mock.mock({
@@ -27,7 +27,6 @@ export default [{
   type: 'get',
   response: config => {
     const { nameid, page = 1, limit = 10, sort, semester, credit } = config.query
-    // console.log(config.query)
     // 处理过滤查找
     let mockList = List.filter(item => {
       if (credit && item.credit.toString() !== credit.toString()) return false
