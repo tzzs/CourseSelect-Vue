@@ -100,7 +100,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'index',
-        name: 'Course',
+        name: 'CourseSelect',
         component: () => import('@/views/course/index'),
         meta: { title: '课程选择', icon: 'list' }
       }
