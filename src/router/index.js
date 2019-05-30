@@ -175,6 +175,36 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/teacher',
+    component: Layout,
+    children: [{
+      name: 'Teacher',
+      path: 'index',
+      component: () => import('@/views/manage/teachers/index'),
+      meta: { title: '教师管理', icon: 'teacher' }
+    }]
+  },
+  {
+    path: '/manage/course',
+    component: Layout,
+    children: [{
+      name: 'courseManage',
+      path: 'index',
+      component: () => import('@/views/manage/course/index'),
+      meta: { title: '课程管理', icon: 'college' }
+    }]
+  },
+  {
+    path: '/student',
+    component: Layout,
+    children: [{
+      name: 'Student',
+      path: 'index',
+      component: () => import('@/views/manage/students/index'),
+      meta: { title: '学生管理', icon: 'student' }
+    }]
+  },
+  {
     path: '/profile',
     component: Layout,
     children: [{
