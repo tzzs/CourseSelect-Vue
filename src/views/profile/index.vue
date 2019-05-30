@@ -34,7 +34,7 @@
                   <el-button type="primary" size="small" icon="el-icon-edit">编辑个人信息</el-button>
                 </el-col>
                 <el-col :span="7">
-                  <router-link class="pan-btn blue-btn" to="/course/index">Course</router-link>
+<!--                  <router-link class="pan-btn blue-btn" to="/course/index">Course</router-link>-->
                 </el-col>
               </el-row>
               <el-row :gutter="24">

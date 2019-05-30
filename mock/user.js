@@ -45,6 +45,25 @@ export default [
         data: token
       }
     }
+  }, {
+    url: '/user/register',
+    type: 'post',
+    response: config => {
+      const { username } = config.body
+      console.log(username + ' register!!')
+      const token = tokens['admin']
+
+      if (!token) {
+        return {
+          code: 60204,
+          message: 'Account and password are incorrect'
+        }
+      }
+      return {
+        code: 20000,
+        data: token
+      }
+    }
   },
 
   // get user info

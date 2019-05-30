@@ -8,7 +8,7 @@ import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['/login'] // no redirect whitelist
+const whiteList = ['/login', '/register'] // no redirect whitelist
 
 router.beforeEach(async(to, from, next) => {
   // start progress bar
@@ -42,6 +42,21 @@ router.beforeEach(async(to, from, next) => {
           next(`/login?redirect=${to.path}`)
           NProgress.done()
         }
+      }
+    }
+    if (to.path === '/register') {
+      next({ path: '/' })
+      NProgress.done()
+    } else {
+      try {
+        await store.dispatch('user/getInfo')
+
+        next()
+      } catch (error) {
+        await store.dispatch('user/resetToken')
+        Message.error(error || 'Has Error')
+        next(`/register?redirect=${to.path}`)
+        NProgress.done()
       }
     }
   } else {

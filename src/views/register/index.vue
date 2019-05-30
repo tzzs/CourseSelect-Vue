@@ -10,7 +10,7 @@
     >
 
       <div class="title-container">
-        <h3 class="title">CQUT LOGIN</h3>
+        <h3 class="title">CQUT REGISTER</h3>
       </div>
 
       <el-form-item prop="username">
@@ -47,20 +47,40 @@
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
-      <el-row style="margin-bottom: 30px">
+
+      <el-form-item prop="repassword">
+        <span class="svg-container">
+          <svg-icon icon-class="password" />
+        </span>
+        <el-input
+          :key="passwordType"
+          ref="repassword"
+          v-model="loginForm.repassword"
+          :type="passwordType"
+          placeholder="Password"
+          name="repassword"
+          tabindex="2"
+          auto-complete="on"
+          @keyup.enter.native="handleLogin"
+        />
+        <span class="show-pwd" @click="showPwd">
+          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+        </span>
+      </el-form-item>
+      <el-row style="margin-bottom:30px;">
         <el-button
           :loading="loading"
           type="primary"
-          style="width:45%;margin-right: 5%;"
-          @click.native.prevent="handleLogin"
-        >Login
+          style="width:45%;margin-right: 5%"
+          @click.native.prevent="handleReg"
+        >Register
         </el-button>
         <el-button
           :loading="loading"
           type="primary"
           style="width:45%;"
-          @click.native.prevent="handleReg"
-        >Register
+          @click.native.prevent="handleLogin"
+        >Login
         </el-button>
       </el-row>
 
@@ -87,7 +107,7 @@
 import { validUsername } from '@/utils/validate'
 
 export default {
-  name: 'Login',
+  name: 'Register',
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
@@ -103,14 +123,25 @@ export default {
         callback()
       }
     }
+    const validateRepassword = (rule, value, callback) => {
+      if (value.length < 6) {
+        callback(new Error('The password can not be less than 6 digits'))
+      } else if (value !== this.loginForm.password) {
+        callback(new Error('Two password is not equals'))
+      } else {
+        callback()
+      }
+    }
     return {
       loginForm: {
         username: 'admin',
-        password: '111111'
+        password: '111111',
+        repassword: '111111'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }],
+        repassword: [{ required: true, trigger: 'blur', validator: validateRepassword }]
       },
       loading: false,
       passwordType: 'password',
@@ -136,11 +167,11 @@ export default {
         this.$refs.password.focus()
       })
     },
-    handleLogin() {
+    handleReg() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
+          this.$store.dispatch('user/register', this.loginForm).then(() => {
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
           }).catch(() => {
@@ -152,8 +183,8 @@ export default {
         }
       })
     },
-    handleReg() {
-      this.$router.push({ path: '/register' })
+    handleLogin() {
+      this.$router.push({ path: '/login' })
     }
   }
 }
