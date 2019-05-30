@@ -105,6 +105,15 @@ export const constantRoutes = [
         meta: { title: 'Course', icon: 'list' }
       }
     ]
+  }, {
+    path: '/grade',
+    component: Layout,
+    children: [{
+      path: 'index',
+      name: 'Grade',
+      component: () => import('@/views/grade/index'),
+      meta: { title: 'Grade', icon: 'grade' }
+    }]
   },
   {
     path: '/manage',
