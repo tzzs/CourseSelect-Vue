@@ -7,7 +7,7 @@ for (let i = 0; i < count; i++) {
   List.push(Mock.mock({
     'id': '@id',
     'teaid': '@id',
-    'name': '@first',
+    'name': '@cname',
     'college': '@title',
     'title': '@first',
     'email': '@email',

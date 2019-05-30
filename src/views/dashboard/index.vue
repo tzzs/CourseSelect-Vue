@@ -52,15 +52,15 @@ export default {
       tableData: [{
         lesson: '1',
         Mon: '',
-        Tues: '测试课程',
+        Tues: '测试课程 A201',
         Wed: '',
         Thur: '',
-        Fri: '测试课程',
+        Fri: '测试课程 6-210',
         Sat: '',
         Sun: ''
       }, {
         lesson: '2',
-        Mon: '测试课程',
+        Mon: '测试课程 5-304',
         Tues: '',
         Wed: '',
         Thur: '',
@@ -71,7 +71,7 @@ export default {
         lesson: '3',
         Mon: '',
         Tues: '',
-        Wed: '测试课程',
+        Wed: '测试课程 1-502',
         Thur: '',
         Fri: '',
         Sat: '',
@@ -83,13 +83,13 @@ export default {
         Wed: '',
         Thur: '',
         Fri: '',
-        Sat: '测试课程',
+        Sat: '测试课程 1-302',
         Sun: ''
       }, {
         lesson: '5',
         Mon: '',
         Tues: '',
-        Wed: '测试课程',
+        Wed: '测试课程 3-205',
         Thur: '',
         Fri: '',
         Sat: '',

@@ -26,7 +26,7 @@
               <el-row :gutter="24">
                 <el-col :span="7">
                   <span class="name" style="margin-top: 1%;display: block">
-                    欺负小虫子
+                    {{ info.name }}
                     <svg-icon icon-class="woman" />
                   </span>
                 </el-col>
@@ -34,7 +34,7 @@
                   <el-button type="primary" size="small" icon="el-icon-edit">编辑个人信息</el-button>
                 </el-col>
                 <el-col :span="7">
-<!--                  <router-link class="pan-btn blue-btn" to="/course/index">Course</router-link>-->
+                  <!--                  <router-link class="pan-btn blue-btn" to="/course/index">Course</router-link>-->
                 </el-col>
               </el-row>
               <el-row :gutter="24">
@@ -78,7 +78,7 @@
             <el-col :span="14" :offset="3">
               <el-row :gutter="24">
                 <el-col :span="7">
-                  <span class="name" style="margin-top: 1%;display: block">欺负小虫子</span>
+                  <span class="name" style="margin-top: 1%;display: block">{{ info.name }}</span>
                 </el-col>
                 <el-col :span="7">
                   <el-button type="primary" size="small" icon="el-icon-edit">编辑个人信息</el-button>

@@ -16,7 +16,8 @@ for (let i = 0; i < count; i++) {
       'date': '@date(yyyy-MM-dd)',
       'weeks': '@integer(1,20)',
       'week': '@integer(1,7)',
-      'lesson': '@integer(1,5)'
+      'lesson': '@integer(1,5)',
+      'room': '@natural'
     }],
     'college': '@title',
     'rate': '@integer(1,5)',
