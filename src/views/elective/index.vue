@@ -145,6 +145,7 @@ export default {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
         const items = response.data.items
+        // console.log(items)
         for (const i in items) {
           items[i].time = this.sortByWeeks(items[i].time)
         }

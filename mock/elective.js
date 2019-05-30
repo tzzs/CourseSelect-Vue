@@ -19,7 +19,7 @@ for (let i = 0; i < count; i++) {
       'lesson': '@integer(1,5)'
     }],
     // 'irate': '@integer(1,5)'
-    'irate': 0
+    'irate': '@integer(0,5)'
   }))
 }
 
