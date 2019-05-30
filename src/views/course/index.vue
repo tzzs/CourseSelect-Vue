@@ -32,20 +32,117 @@
           :value="item"
         />
       </el-select>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+      <el-button v-if="activeName==='2'" v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+        Search
+      </el-button>
+      <el-button v-else disabled v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
       </el-button>
     </div>
     <el-divider />
-    <el-collapse accordion>
-      <el-collapse-item style="margin:1% 0 3% 0">
+    <el-collapse v-model="activeName" accordion>
+      <el-collapse-item name="1">
         <template slot="title">
           <h3>课程推荐 Course recommendation</h3>&nbsp;(点击展开)<i class="header-icon el-icon-info" />
         </template>
         <el-table
           ref="Table"
           v-loading="listLoading"
-          :data="recommend"
+          :data="recList"
+          border
+          fit
+          highlight-current-row
+          style="width: 100%"
+          tooltip-effect="dark"
+          @selection-change="handleSelectionChange"
+          @sort-change="sortChange"
+        >
+          <el-table-column
+            type="selection"
+            width="55"
+            align="center"
+          />
+          <el-table-column align="center" sortable label="ID" width="80">
+            <template slot-scope="scope">
+              <span>{{ scope.row.id }}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column min-width="150px" align="center" label="课程">
+            <template slot-scope="scope">
+              <span>{{ scope.row.name }}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column width="100" align="center" label="教师">
+            <template slot-scope="scope">
+              <span>{{ scope.row.teacher }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="学期" align="center">
+            <template slot-scope="scope">
+              <span>{{ scope.row.semester }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="评分" width="100">
+            <template slot-scope="scope">
+              <svg-icon v-for="n in +scope.row.rate" :key="n" icon-class="star" class="meta-item__icon" />
+            </template>
+          </el-table-column>
+          <el-table-column label="人数" align="center" width="100">
+            <template slot-scope="{row}">
+              <span
+                v-if="row.stu_number"
+                class="link-type"
+                @click="handleFetchPv(row.stu_number)"
+              >{{ row.stu_number }}</span>
+              <span v-else>0</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="学分" width="100" align="center">
+            <template slot-scope="scope">
+              <span>{{ scope.row.credit }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column width="100" align="center" label="学时">
+            <template slot-scope="scope">
+              <span>{{ scope.row.period }}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column class-name="status-col" align="center" label="剩余可选" width="100">
+            <template slot-scope="scope">
+              <span>{{ scope.row.stu_number }}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column align="center" label="上课时间" min-width="110">
+            <template slot-scope="scope">
+              <el-dropdown>
+                <span class="el-dropdown-link">
+                  学时：{{ scope.row.period }}<i class="el-icon-arrow-down el-icon--right" />
+                </span>
+                <el-dropdown-menu
+                  slot="dropdown"
+                >
+                  <el-dropdown-item
+                    v-for="t of scope.row.time"
+                    disabled
+                  >{{ t.weeks }}周-星期{{ t.week }}-{{ t.lesson }}</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-collapse-item>
+      <el-collapse-item name="2">
+        <template slot="title">
+          <h3>课程选择 Course selection</h3>&nbsp;(点击展开)<i class="header-icon el-icon-info" />
+        </template>
+        <el-table
+          ref="multipleTable"
+          v-loading="listLoading"
+          :data="list"
           border
           fit
           highlight-current-row
@@ -133,96 +230,6 @@
         </el-table>
       </el-collapse-item>
     </el-collapse>
-    <el-divider />
-    <el-table
-      ref="multipleTable"
-      v-loading="listLoading"
-      :data="list"
-      border
-      fit
-      highlight-current-row
-      style="width: 100%"
-      tooltip-effect="dark"
-      @selection-change="handleSelectionChange"
-      @sort-change="sortChange"
-    >
-      <el-table-column
-        type="selection"
-        width="55"
-        align="center"
-      />
-      <el-table-column align="center" sortable label="ID" width="80">
-        <template slot-scope="scope">
-          <span>{{ scope.row.id }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column min-width="150px" align="center" label="课程">
-        <template slot-scope="scope">
-          <span>{{ scope.row.name }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column width="100" align="center" label="教师">
-        <template slot-scope="scope">
-          <span>{{ scope.row.teacher }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="学期" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.semester }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="评分" width="100">
-        <template slot-scope="scope">
-          <svg-icon v-for="n in +scope.row.rate" :key="n" icon-class="star" class="meta-item__icon" />
-        </template>
-      </el-table-column>
-      <el-table-column label="人数" align="center" width="100">
-        <template slot-scope="{row}">
-          <span
-            v-if="row.stu_number"
-            class="link-type"
-            @click="handleFetchPv(row.stu_number)"
-          >{{ row.stu_number }}</span>
-          <span v-else>0</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="学分" width="100" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.credit }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column width="100" align="center" label="学时">
-        <template slot-scope="scope">
-          <span>{{ scope.row.period }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column class-name="status-col" align="center" label="剩余可选" width="100">
-        <template slot-scope="scope">
-          <span>{{ scope.row.stu_number }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="上课时间" min-width="110">
-        <template slot-scope="scope">
-          <el-dropdown>
-            <span class="el-dropdown-link">
-              学时：{{ scope.row.period }}<i class="el-icon-arrow-down el-icon--right" />
-            </span>
-            <el-dropdown-menu
-              slot="dropdown"
-            >
-              <el-dropdown-item
-                v-for="t of scope.row.time"
-                disabled
-              >{{ t.weeks }}周-星期{{ t.week }}-{{ t.lesson }}</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </template>
-      </el-table-column>
-    </el-table>
 
     <pagination
       v-show="total>0"
@@ -236,7 +243,7 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/course'
+import { fetchList, fetchRecList } from '@/api/course'
 import waves from '@/directive/waves' // waves directive
 // import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
@@ -256,7 +263,10 @@ export default {
   },
   data() {
     return {
+      activeName: '2',
       checkList: [],
+      recList: null,
+      recTotal: 0,
       list: null,
       total: 0,
       listLoading: true,
@@ -292,6 +302,15 @@ export default {
         }
         this.list = items
         this.total = response.data.total
+        this.listLoading = false
+      })
+      fetchRecList().then(response => {
+        const items = response.data.items
+        for (const i in items) {
+          items[i].time = this.sortByWeeks(items[i].time)
+        }
+        this.recList = items
+        this.recTotal = response.data.total
         this.listLoading = false
       })
     }, handleFilter() {

@@ -46,3 +46,11 @@ export function updateCourse(data) {
     data
   })
 }
+
+export function fetchRecList(query) {
+  return request({
+    url: '/course/recList',
+    method: 'get',
+    params: query
+  })
+}

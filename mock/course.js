@@ -54,7 +54,39 @@ export default [{
       }
     }
   }
-}, {
+},
+{
+  url: '/course/recList',
+  type: 'get',
+  response: config => {
+    const { rate, status, name, page = 1, limit = 3, sort, credit, remain } = config.query
+
+    // 处理过滤查找
+    let mockList = List.filter(item => {
+      if (rate && item.rate !== +rate) return false
+      if (status && item.status !== status) return false
+      if (credit && item.credit !== +credit) return false
+      if (remain && item.stu_number === 0) return false
+      if (name && item.name.indexOf(name) < 0) return false
+      return true
+    })
+
+    if (sort === '-id') {
+      mockList = mockList.reverse()
+    }
+
+    const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+
+    return {
+      code: 20000,
+      data: {
+        total: mockList.length,
+        items: pageList
+      }
+    }
+  }
+},
+{
   url: '/course/allList',
   type: 'get',
   response: config => {
