@@ -6,6 +6,7 @@
         placeholder="Name/ID"
         style="width: 400px;"
         class="filter-item"
+        clearable
         @keyup.enter.native="handleFilter"
       />
       <el-select v-model="listQuery.semester" placeholder="Semester" clearable class="filter-item">
