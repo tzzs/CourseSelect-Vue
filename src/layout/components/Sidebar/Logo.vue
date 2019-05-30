@@ -24,8 +24,9 @@ export default {
   },
   data() {
     return {
-      title: 'Vue Admin Template',
-      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      title: 'CQUT选课系统'
+      // logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      // logo: 'https://www.cqut.edu.cn/images/logo.png'
     }
   }
 }
@@ -46,7 +47,8 @@ export default {
   width: 100%;
   height: 50px;
   line-height: 50px;
-  background: #2b2f3a;
+  /*background: #2b2f3a;*/
+  background: rgba(59, 50, 135, 0.9);
   text-align: center;
   overflow: hidden;
 
