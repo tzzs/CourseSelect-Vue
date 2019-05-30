@@ -6,7 +6,7 @@ const count = 100
 for (let i = 0; i < count; i++) {
   List.push(Mock.mock({
     'id': '@integer(10000,99999)',
-    'name': '@title',
+    'name': '@ctitle',
     'period': '@integer(10,20)',
     'credit': '@integer(2,8)',
     'semester': '@integer(1,10)',
@@ -55,6 +55,16 @@ export default [{
     }
   }
 }, {
+  url: '/course/allList',
+  type: 'get',
+  response: config => {
+    return {
+      code: 20000,
+      items: List
+    }
+  }
+},
+{
   url: '/course/detail',
   type: 'get',
   response: config => {

@@ -232,7 +232,7 @@
 </template>
 
 <script>
-import { fetchList, fetchPv, createCourse, updateCourse } from '@/api/course'
+import { fetchList, fetchPv, fetchAllList, createCourse, updateCourse } from '@/api/course'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -267,6 +267,7 @@ export default {
     return {
       tableKey: 0,
       list: null,
+      alllist: null,
       total: 0,
       listLoading: true,
       listQuery: {
@@ -327,6 +328,9 @@ export default {
         setTimeout(() => {
           this.listLoading = false
         }, 1.5 * 1000)
+      })
+      fetchAllList().then(response => {
+        this.alllist = response.items
       })
     },
     timeSort(list) {
@@ -467,7 +471,7 @@ export default {
         // const data = this.formatJson(filterVal, this.list)
 
         const header = ['id', 'name', 'teacher', 'reviewer', 'credit', 'rate', 'stu_number']
-        const data = this.formatJson(header, this.list)
+        const data = this.formatJson(header, this.alllist)
         excel.export_json_to_excel({
           header: header,
           data,
