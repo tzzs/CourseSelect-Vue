@@ -60,16 +60,6 @@
           <span style="color:red;">{{ scope.row.sex }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="邮箱" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.email }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="电话">
-        <template slot-scope="scope">
-          <span>{{ scope.row.phone }}</span>
-        </template>
-      </el-table-column>
       <el-table-column label="学院" align="center">
         <template slot-scope="{row}">
           <span>{{ row.college }}</span>
@@ -83,6 +73,16 @@
       <el-table-column label="专业" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.profession }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="邮箱" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.email }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="电话">
+        <template slot-scope="scope">
+          <span>{{ scope.row.phone }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Actions" align="center" class-name="small-padding fixed-width" min-width="160">
