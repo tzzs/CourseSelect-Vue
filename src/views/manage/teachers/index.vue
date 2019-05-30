@@ -6,6 +6,7 @@
         placeholder="姓名"
         style="width: 150px;"
         class="filter-item"
+        clearable
         @keyup.enter.native="handleFilter"
       />
       <el-input
@@ -13,6 +14,7 @@
         placeholder="职称"
         style="width: 150px;"
         class="filter-item"
+        clearable
         @keyup.enter.native="handleFilter"
       />
       <el-input
@@ -20,6 +22,7 @@
         placeholder="学院"
         style="width: 150px"
         class="filter-item"
+        clearable
         @keyup.enter.native="handleFilter"
       />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">

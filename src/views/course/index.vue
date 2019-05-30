@@ -10,6 +10,7 @@
         placeholder="Name"
         style="width: 200px;"
         class="filter-item"
+        clearable
         @keyup.enter.native="handleFilter"
       />
       <el-input
@@ -17,6 +18,7 @@
         placeholder="Credit"
         style="width: 100px;"
         class="filter-item"
+        clearable
         @keyup.enter.native="handleFilter"
       />
       <el-select v-model="listQuery.rate" placeholder="Rate" clearable style="width: 90px" class="filter-item">

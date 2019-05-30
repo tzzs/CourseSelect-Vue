@@ -6,6 +6,7 @@
         placeholder="搜索内容"
         style="width: 350px;"
         class="filter-item"
+        clearable
         @keyup.enter.native="handleFilter"
       />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
