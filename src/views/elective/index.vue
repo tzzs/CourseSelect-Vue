@@ -57,6 +57,11 @@
           <svg-icon v-for="n in +scope.row.rate" :key="n" icon-class="star" class="meta-item__icon" />
         </template>
       </el-table-column>
+      <el-table-column label="本人评分" width="100">
+        <template v-if="scope.row.irate>0" slot-scope="scope">
+          <svg-icon v-for="n in +scope.row.irate" :key="n" icon-class="star" class="meta-item__icon" />
+        </template>
+      </el-table-column>
       <el-table-column label="学分" width="100" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.credit }}</span>
@@ -80,8 +85,11 @@
           </el-dropdown>
         </template>
       </el-table-column>
-      <el-table-column label="Actions" align="center" class-name="small-padding fixed-width" width="100">
+      <el-table-column label="Actions" align="center" class-name="small-padding fixed-width" width="200">
         <template slot-scope="{row}">
+          <el-button size="mini" type="primary" @click="handleRate(row)">
+            Rate
+          </el-button>
           <el-button size="mini" type="danger" @click="handleDelete(row)">
             Delete
           </el-button>
@@ -110,15 +118,6 @@ export default {
   name: 'Elective',
   components: { Pagination },
   directives: { waves },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        Optional: 'success',
-        NotOptional: 'danger'
-      }
-      return statusMap[status]
-    }
-  },
   data() {
     return {
       list: null,
@@ -133,7 +132,8 @@ export default {
         semester: undefined,
         sort: '+id'
       },
-      sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }]
+      sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
+      irateHidden: false
     }
   },
   created() {
@@ -185,6 +185,42 @@ export default {
         this.listQuery.sort = '-id'
       }
       this.handleFilter()
+    },
+    handleRate(row) {
+      console.log(row)
+      this.$prompt('请输入评分', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputValidator: (value) => {
+          if (!isNaN(Number(value))) {
+            if (value < 1 || value > 5) {
+              return false
+            }
+          } else {
+            return '非法数据，评分在1~5之间'
+          }
+        },
+        inputErrorMessage: '评分在1~5之间'
+      }
+      ).then(({ value }) => {
+        this.$message({
+          type: 'success',
+          message: '你的评分是: ' + value
+        })
+        for (const v of this.list) {
+          if (v.id === row.id) {
+            const index = this.list.indexOf(v)
+            v.irate = value
+            this.list.splice(index, 1, v)
+            break
+          }
+        }
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消输入'
+        })
+      })
     },
     handleDelete(row) {
       this.$notify({

@@ -18,7 +18,8 @@ for (let i = 0; i < count; i++) {
       'week': '@integer(1,7)',
       'lesson': '@integer(1,5)'
     }],
-    'irate': '@integer(1,5)'
+    // 'irate': '@integer(1,5)'
+    'irate': 0
   }))
 }
 
