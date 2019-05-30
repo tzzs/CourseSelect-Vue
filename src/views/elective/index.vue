@@ -192,6 +192,7 @@ export default {
       this.$prompt('请输入评分', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
+        inputPlaceholder: row.irate,
         inputValidator: (value) => {
           if (!isNaN(Number(value))) {
             if (value < 1 || value > 5) {
@@ -219,7 +220,7 @@ export default {
       }).catch(() => {
         this.$message({
           type: 'info',
-          message: '取消输入'
+          message: '取消评分'
         })
       })
     },
