@@ -78,7 +78,7 @@ export default [{
     }
   }
 }, {
-  url: 'student/detail',
+  url: '/student/detail',
   type: 'get',
   response: config => {
     const { id } = config.query
@@ -93,11 +93,9 @@ export default [{
     }
   }
 }, {
-  url: 'student/create',
+  url: '/student/create',
   type: 'post',
-  repsonse: _ => {
-    const data = _.query
-    console.log('student create:' + data)
+  response: _ => {
     return {
       code: 20000,
       data: 'success'

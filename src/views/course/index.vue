@@ -107,7 +107,6 @@
 
       <el-table-column align="center" label="上课时间" min-width="110">
         <template slot-scope="scope">
-          <!--          <span>{{ scope.row.time[0] }}</span>-->
           <el-dropdown>
             <span class="el-dropdown-link">
               学时：{{ scope.row.period }}<i class="el-icon-arrow-down el-icon--right" />
@@ -123,14 +122,6 @@
           </el-dropdown>
         </template>
       </el-table-column>
-
-      <!--      <el-table-column align="center" label="Actions" width="120">-->
-      <!--        <template slot-scope="scope">-->
-      <!--          <router-link :to="'/example/edit/'+scope.row.id">-->
-      <!--            <el-button type="primary" size="small" icon="el-icon-edit">Edit</el-button>-->
-      <!--          </router-link>-->
-      <!--        </template>-->
-      <!--      </el-table-column>-->
     </el-table>
 
     <pagination

@@ -117,7 +117,7 @@
       </el-table-column>
       <el-table-column label="Date" width="110" align="center">
         <template slot-scope="scope">
-          <el-dropdown>
+          <el-dropdown v-if="scope.row.time">
             <span class="el-dropdown-link">
               学时：{{ scope.row.time.length }}<i class="el-icon-arrow-down el-icon--right" />
             </span>
@@ -170,7 +170,6 @@
       @pagination="getList"
     />
 
-    <!--todo 修改弹窗内容-->
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form
         ref="dataForm"
@@ -180,6 +179,10 @@
         label-width="70px"
         style="width: 400px; margin-left:50px;"
       >
+        <el-form-item label="ID" prop="id">
+          <el-input v-if="dialogStatus!=='create'" v-model="temp.id" :disabled="true" />
+          <el-input v-else v-model="temp.id" />
+        </el-form-item>
         <el-form-item label="Title" prop="name">
           <el-input v-model="temp.name" />
         </el-form-item>
@@ -285,6 +288,7 @@ export default {
       showHidden: false,
       showSemester: false,
       temp: {
+        id: '',
         name: '',
         credit: '',
         teacher: '',
@@ -403,6 +407,7 @@ export default {
         if (valid) {
           createCourse(this.temp).then(() => {
             this.list.unshift(this.temp)
+            console.log(this.list)
             this.dialogFormVisible = false
             this.$notify({
               title: 'Success',

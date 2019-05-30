@@ -114,8 +114,9 @@
         label-width="70px"
         style="width: 400px; margin-left:50px;"
       >
-        <el-form-item v-show="false" label="id" prop="id">
-          <el-input v-model="temp.id" />
+        <el-form-item v-show="true" label="ID" prop="id">
+          <el-input v-if="dialogStatus!=='create'" v-model="temp.id" :disabled="true" />
+          <el-input v-else v-model="temp.id" />
         </el-form-item>
         <el-form-item label="学号" prop="teaid">
           <el-input v-model="temp.stuid" />
@@ -168,7 +169,7 @@ import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
 export default {
-  name: 'ComplexTable',
+  name: 'Student',
   components: { Pagination },
   directives: { waves },
   filters: {
@@ -198,8 +199,8 @@ export default {
       showSemester: false,
       temp: {
         id: '',
-        name: '',
         stuid: '',
+        name: '',
         email: '',
         phone: '',
         college: '',
@@ -263,7 +264,6 @@ export default {
       }
       this.handleFilter()
     },
-    // todo 重置temp问题
     resetTemp() {
       this.temp = {
         id: '',
@@ -287,8 +287,12 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          console.log(this.list)
+          console.log(this.temp)
+          console.log(JSON.stringify(this.temp))
           createStudent(this.temp).then(() => {
             this.list.unshift(this.temp)
+            console.log(this.list)
             this.dialogFormVisible = false
             this.$notify({
               title: 'Success',
@@ -302,7 +306,6 @@ export default {
     },
     handleUpdate(row) {
       this.temp = Object.assign({}, row) // copy obj
-      this.temp.timestamp = new Date(this.temp.timestamp)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {

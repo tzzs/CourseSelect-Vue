@@ -231,7 +231,7 @@ export const constantRoutes = [
     }]
   },
   {
-    path: 'external-link',
+    path: 'cqut',
     component: Layout,
     children: [
       {
@@ -242,7 +242,7 @@ export const constantRoutes = [
     ]
   },
   {
-    path: 'external-link',
+    path: 'icqut',
     component: Layout,
     children: [
       {
