@@ -51,6 +51,11 @@
             :data="elist"
             border
           >
+            <el-table-column
+              align="center"
+              type="index"
+              width="50">
+            </el-table-column>
             <el-table-column label="学号">
               <template slot-scope="scope">
                 <span>{{ scope.row.id }}</span>
