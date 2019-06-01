@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  name: 'Plan1'
+  name: 'Allplan'
 }
 </script>
 
