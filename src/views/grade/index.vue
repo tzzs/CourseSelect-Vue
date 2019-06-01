@@ -1,7 +1,19 @@
 <template>
   <div class="app-container">
-    <!--    todo 添加学期修改-->
-
+    <el-select v-model="listQuery.semester" clearable placeholder="请选择" style="margin-bottom: 2%">
+      <el-option
+        v-for="item in options"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      >
+        <span style="float: left">{{ item.label }}</span>
+        <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
+      </el-option>
+    </el-select>
+    <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+      Search
+    </el-button>
     <el-table
       ref="multipleTable"
       v-loading="listLoading"
@@ -92,11 +104,37 @@ export default {
         name: undefined,
         type: undefined,
         sort: '+id',
-        remain: undefined
+        semester: undefined
       },
       count: 0,
       sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
-      multipleSelection: []
+      multipleSelection: [],
+      value: undefined,
+      options: [{
+        value: '1',
+        label: '大一上'
+      }, {
+        value: '2',
+        label: '大一下'
+      }, {
+        value: '3',
+        label: '大二上'
+      }, {
+        value: '4',
+        label: '大二下'
+      }, {
+        value: '5',
+        label: '大三上'
+      }, {
+        value: '6',
+        label: '大三下'
+      }, {
+        value: '7',
+        label: '大四上'
+      }, {
+        value: '8',
+        label: '大四下'
+      }]
     }
   },
   created() {
@@ -112,6 +150,10 @@ export default {
         this.total = response.data.total
         this.listLoading = false
       })
+    },
+    handleFilter() {
+      this.listQuery.page = 1
+      this.getList()
     }
   }
 }
