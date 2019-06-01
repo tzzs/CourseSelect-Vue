@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function fetchList(query) {
+export function fetchElectiveList(query) {
   return request({
     url: '/elective/list',
     method: 'get',

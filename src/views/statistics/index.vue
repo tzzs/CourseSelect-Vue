@@ -40,20 +40,40 @@
             class="filter-item"
             type="primary"
             icon="el-icon-download"
+            size="small"
             @click="handleDownload"
           >
             Export
           </el-button>
-          <el-table v-loading="elistLoading" fit highlight-current-row :data="elist">
+          <el-table
+            v-loading="elistLoading"
+            fit
+            highlight-current-row
+            :data="elist"
+            border
+          >
             <el-table-column label="学号">
               <template slot-scope="scope">
                 <span>{{ scope.row.id }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="姓名">123</el-table-column>
-            <el-table-column label="班级">123</el-table-column>
-            <el-table-column label="专业">123</el-table-column>
-            <el-table-column label="学院">123</el-table-column>
+            <el-table-column label="姓名">
+              <template slot-scope="scope">
+                <span>{{ scope.row.name }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="班级">
+              <template slot-scope="scope">
+                <span>{{ scope.row.class }}</span>
+              </template></el-table-column>
+            <el-table-column label="专业">
+              <template slot-scope="scope">
+                <span>{{ scope.row.profession }}</span>
+              </template></el-table-column>
+            <el-table-column label="学院">
+              <template slot-scope="scope">
+                <span>{{ scope.row.college }}</span>
+              </template></el-table-column>
           </el-table>
         </template>
       </el-table-column>
@@ -115,7 +135,8 @@
 </template>
 
 <script>
-import { fetcheList, fetchList } from '@/api/elective'
+import { fetcheList, fetchElectiveList } from '@/api/elective'
+import { fetchList } from '@/api/student'
 import waves from '@/directive/waves' // waves directive
 // import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
@@ -141,7 +162,8 @@ export default {
       sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
       irateHidden: false,
       elistLoading: true,
-      elist: null
+      elist: null,
+      downloadLoading: false
     }
   },
   created() {
@@ -152,7 +174,7 @@ export default {
     // 获取课程信息
     getList() {
       this.listLoading = true
-      fetchList(this.listQuery).then(response => {
+      fetchElectiveList(this.listQuery).then(response => {
         const items = response.data.items
         // console.log(items)
         for (const i in items) {
@@ -165,8 +187,9 @@ export default {
     },
     geteList() {
       this.elistLoading = true
-      fetcheList().then(response => {
+      fetchList().then(response => {
         this.elist = response.data.items
+        console.log(this.elist)
       })
       this.elistLoading = false
     },

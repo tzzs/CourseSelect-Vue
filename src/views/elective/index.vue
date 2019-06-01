@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/elective'
+import { fetchElectiveList } from '@/api/elective'
 import waves from '@/directive/waves' // waves directive
 // import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
@@ -143,7 +143,7 @@ export default {
     // 获取课程信息
     getList() {
       this.listLoading = true
-      fetchList(this.listQuery).then(response => {
+      fetchElectiveList(this.listQuery).then(response => {
         const items = response.data.items
         // console.log(items)
         for (const i in items) {
