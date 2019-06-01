@@ -195,6 +195,16 @@ export const constantRoutes = [
     }]
   },
   {
+    path: '/statistics',
+    component: Layout,
+    children: [{
+      name: 'courseManage',
+      path: 'index',
+      component: () => import('@/views/statistics/index'),
+      meta: { title: '课程统计', icon: 'course' }
+    }]
+  },
+  {
     path: '/student',
     component: Layout,
     children: [{
