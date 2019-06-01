@@ -31,10 +31,25 @@
       @sort-change="sortChange"
     >
       <el-table-column type="expand">
-        <template slot-scope="">
+        <template slot-scope="scope">
+          <span>课程共计：<el-tag>{{ elist.length }}人</el-tag> </span>
           <!--          todo 提供导出-->
-          <el-table>
-            <el-table-column label="学号">123</el-table-column>
+          <el-button
+            v-waves
+            :loading="downloadLoading"
+            class="filter-item"
+            type="primary"
+            icon="el-icon-download"
+            @click="handleDownload"
+          >
+            Export
+          </el-button>
+          <el-table v-loading="elistLoading" fit highlight-current-row :data="elist">
+            <el-table-column label="学号">
+              <template slot-scope="scope">
+                <span>{{ scope.row.id }}</span>
+              </template>
+            </el-table-column>
             <el-table-column label="姓名">123</el-table-column>
             <el-table-column label="班级">123</el-table-column>
             <el-table-column label="专业">123</el-table-column>
@@ -100,7 +115,7 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/elective'
+import { fetcheList, fetchList } from '@/api/elective'
 import waves from '@/directive/waves' // waves directive
 // import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
@@ -124,11 +139,14 @@ export default {
         sort: '+id'
       },
       sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
-      irateHidden: false
+      irateHidden: false,
+      elistLoading: true,
+      elist: null
     }
   },
   created() {
     this.getList()
+    this.geteList()
   },
   methods: {
     // 获取课程信息
@@ -144,6 +162,13 @@ export default {
         this.total = response.data.total
         this.listLoading = false
       })
+    },
+    geteList() {
+      this.elistLoading = true
+      fetcheList().then(response => {
+        this.elist = response.data.items
+      })
+      this.elistLoading = false
     },
     handleFilter() {
       this.listQuery.page = 1
@@ -224,6 +249,24 @@ export default {
       })
       const index = this.list.indexOf(row)
       this.list.splice(index, 1)
+    },
+    handleDownload() {
+      this.downloadLoading = true
+      import('@/vendor/Export2Excel').then(excel => {
+        const header = ['id', 'name', 'class', 'profession', 'college']
+        const data = this.formatJson(header, this.elist)
+        excel.export_json_to_excel({
+          header: header,
+          data,
+          filename: 'table-list'
+        })
+        this.downloadLoading = false
+      })
+    },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map(v => filterVal.map(j => {
+        return v[j]
+      }))
     }
   }
 }

@@ -7,3 +7,11 @@ export function fetchList(query) {
     params: query
   })
 }
+
+export function fetcheList(query) {
+  return request({
+    url: '/elective/elist',
+    method: 'get',
+    params: query
+  })
+}

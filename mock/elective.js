@@ -2,6 +2,8 @@ import Mock from 'mockjs'
 
 const List = []
 const count = 20
+const eList = []
+const ecount = 20
 
 for (let i = 0; i < count; i++) {
   List.push(Mock.mock({
@@ -20,6 +22,17 @@ for (let i = 0; i < count; i++) {
     }],
     // 'irate': '@integer(1,5)'
     'irate': '@integer(0,5)'
+  }))
+}
+
+for (let i = 0; i < ecount; i++) {
+  eList.push(Mock.mock({
+    'id': '@id',
+    'cid': 'id',
+    'stuid': '@id',
+    'rate': 'integer(1,5)',
+    'usual': '@integer(1,30)',
+    'testscore': '@integer(1,70)'
   }))
 }
 
@@ -50,4 +63,31 @@ export default [{
       }
     }
   }
+},
+{
+  url: '/elective/elist',
+  type: 'get',
+  response: config => {
+    const { sort, cid } = config.query
+
+    // todo 按照学号排序
+    // 查找对应课程
+    // let mockList = eList.filter(item => {
+    //   if (cid && item.cid.toString() !== cid.toString()) return false
+    //   return true
+    // })
+    //
+    // if (sort === '-id') {
+    //   mockList = mockList.reverse()
+    // }
+
+    return {
+      code: 20000,
+      data: {
+        total: eList.length,
+        items: eList
+      }
+    }
+  }
 }]
+
