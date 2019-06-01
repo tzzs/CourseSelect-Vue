@@ -21,7 +21,8 @@ for (let i = 0; i < count; i++) {
       'lesson': '@integer(1,5)'
     }],
     // 'irate': '@integer(1,5)'
-    'irate': '@integer(0,5)'
+    'irate': '@integer(0,5)',
+    'number': '@integer(1,120)'
   }))
 }
 

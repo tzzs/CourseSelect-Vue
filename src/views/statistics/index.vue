@@ -33,7 +33,6 @@
       <el-table-column type="expand">
         <template slot-scope="scope">
           <span>课程共计：<el-tag>{{ elist.length }}人</el-tag> </span>
-          <!--          todo 提供导出-->
           <el-button
             v-waves
             :loading="downloadLoading"
@@ -43,7 +42,7 @@
             size="small"
             @click="handleDownload"
           >
-            Export
+            导出
           </el-button>
           <el-table
             v-loading="elistLoading"
@@ -91,6 +90,11 @@
       <el-table-column width="100" align="center" label="教师">
         <template slot-scope="scope">
           <span>{{ scope.row.teacher }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="人数">
+        <template slot-scope="scope">
+          <span>{{ scope.row.number }}</span>
         </template>
       </el-table-column>
       <el-table-column label="学期" align="center">

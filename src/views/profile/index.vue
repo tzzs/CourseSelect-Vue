@@ -33,9 +33,7 @@
                 <el-col :span="7">
                   <el-button type="primary" size="small" icon="el-icon-edit">编辑个人信息</el-button>
                 </el-col>
-                <el-col :span="7">
-                  <!--                  <router-link class="pan-btn blue-btn" to="/course/index">Course</router-link>-->
-                </el-col>
+                <el-col :span="7" />
               </el-row>
               <el-row :gutter="24">
                 <el-col :span="7">
@@ -219,6 +217,7 @@ export default {
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw)
       // console.log(this.imageUrl)
+      this.$message.success('更新完成')
     },
     beforeAvatarUpload(file) {
       const isLt2M = file.size / 1024 / 1024 < 2

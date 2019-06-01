@@ -185,6 +185,16 @@ export const constantRoutes = [
     }]
   },
   {
+    path: '/plan',
+    component: Layout,
+    children: [{
+      name: 'Plan',
+      path: 'index',
+      component: () => import('@/views/plan/index'),
+      meta: { title: '培养计划', icon: 'plan' }
+    }]
+  },
+  {
     path: '/manage/course',
     component: Layout,
     children: [{
