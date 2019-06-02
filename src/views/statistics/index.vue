@@ -32,18 +32,20 @@
     >
       <el-table-column type="expand">
         <template slot-scope="scope">
-          <span>课程共计：<el-tag>{{ elist.length }}人</el-tag> </span>
-          <el-button
-            v-waves
-            :loading="downloadLoading"
-            class="filter-item"
-            type="primary"
-            icon="el-icon-download"
-            size="small"
-            @click="handleDownload"
-          >
-            导出
-          </el-button>
+          <div style="margin-bottom: 1%">
+            <span>此课程人数共计：<el-tag>{{ elist.length }}人</el-tag> </span>
+            <el-button
+              v-waves
+              :loading="downloadLoading"
+              class="filter-item"
+              type="primary"
+              icon="el-icon-download"
+              size="small"
+              @click="handleDownload"
+            >
+              导出
+            </el-button>
+          </div>
           <el-table
             v-loading="elistLoading"
             fit
