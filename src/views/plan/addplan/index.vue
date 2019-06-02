@@ -220,6 +220,7 @@
 
 <script>
 import { fetchList, fetchPv, fetchAllList, createCourse, updateCourse } from '@/api/course'
+import { fetchPlanList } from '@/api/plan'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -299,8 +300,14 @@ export default {
   },
   created() {
     this.getList()
+    this.getPlanList()
   },
   methods: {
+    getPlanList() {
+      fetchPlanList().then(response => {
+        console.log(response.data.items)
+      })
+    },
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
