@@ -17,24 +17,1012 @@
     </div>
     <div v-show="!show">
       <el-button icon="el-icon-arrow-left" style="margin:0 0 2% 4%" @click="goBack()">返回</el-button>
+      <div style="margin:0 0 2% 4%"><span><el-tag>学期</el-tag></span></div>
       <el-timeline>
-        <el-timeline-item timestamp="大一上" placement="top">
+        <el-timeline-item timestamp="1" placement="top">
           <el-card>
-            <h4>更新 Github 模板</h4>
-            <p>王小虎 提交于 2018/4/12 20:46</p>
+            <el-collapse v-model="activeNames" @change="handleChange">
+              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="1">
+                <router-link to="/manage/course/index"><el-button style="margin-bottom: 1%">管理</el-button></router-link>
+                <el-table
+                  :key="tableKey"
+                  v-loading="listLoading"
+                  :data="list"
+                  border
+                  fit
+                  highlight-current-row
+                  style="width: 100%;"
+                >
+                  <el-table-column
+                    align="center"
+                    type="index"
+                    width="50"
+                    fixed
+                  />
+                  <el-table-column label="ID" prop="id" sortable align="center" width="80">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.id }}</span>
+                    </template>
+                  </el-table-column>
 
+                  <el-table-column label="课程" min-width="150px">
+                    <template slot-scope="{row}">
+                      <span class="link-type" @click="handleUpdate(row)">{{ row.name }}</span>
+                      <!--          <el-tag>{{ row.type | typeFilter }}</el-tag>-->
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="教师" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.teacher }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column v-if="showHidden" label="Reviewer" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span style="color:red;">{{ scope.row.reviewer }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="学分" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.credit }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <!-- todo 只读分数展示允许半星-->
+                  <el-table-column label="评分" width="100">
+                    <template slot-scope="scope">
+                      <svg-icon v-for="n in +scope.row.rate" :key="n" icon-class="star" class="meta-item__icon" />
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="人数" align="center" width="100">
+                    <template slot-scope="{row}">
+                      <span
+                        v-if="row.stu_number"
+                        class="link-type"
+                        @click="handleFetchPv(row.stu_number)"
+                      >{{ row.stu_number }}</span>
+                      <span v-else>0</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="Date" width="110" align="center">
+                    <template slot-scope="scope">
+                      <el-dropdown v-if="scope.row.time">
+                        <span class="el-dropdown-link">
+                          学时：{{ scope.row.time.length }}<i class="el-icon-arrow-down el-icon--right" />
+                        </span>
+                        <el-dropdown-menu
+                          slot="dropdown"
+                        >
+                          <el-dropdown-item
+                            v-for="t of scope.row.time"
+                            disabled
+                          >{{ t.weeks }}周-星期{{ t.week }}-{{ t.lesson }}</el-dropdown-item>
+                        </el-dropdown-menu>
+                      </el-dropdown>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-collapse-item>
+            </el-collapse>
           </el-card>
         </el-timeline-item>
-        <el-timeline-item timestamp="大一下" placement="top">
+        <el-timeline-item timestamp="2" placement="top">
           <el-card>
-            <h4>更新 Github 模板</h4>
-            <p>王小虎 提交于 2018/4/3 20:46</p>
+            <el-collapse v-model="activeNames" @change="handleChange">
+              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="1">
+                <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
+                <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
+
+                <h4>更新 Github 模板</h4>
+                <p>王小虎 提交于 2018/4/12 20:46</p>
+
+                <el-table
+                  :key="tableKey"
+                  v-loading="listLoading"
+                  :data="list"
+                  border
+                  fit
+                  highlight-current-row
+                  style="width: 100%;"
+                  @sort-change="sortChange"
+                >
+                  <el-table-column
+                    align="center"
+                    type="index"
+                    width="50"
+                    fixed
+                  />
+                  <el-table-column label="ID" prop="id" sortable align="center" width="80">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.id }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column label="课程" min-width="150px">
+                    <template slot-scope="{row}">
+                      <span class="link-type" @click="handleUpdate(row)">{{ row.name }}</span>
+                      <!--          <el-tag>{{ row.type | typeFilter }}</el-tag>-->
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="教师" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.teacher }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column v-if="showHidden" label="Reviewer" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span style="color:red;">{{ scope.row.reviewer }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="学分" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.credit }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <!-- todo 只读分数展示允许半星-->
+                  <el-table-column label="评分" width="100">
+                    <template slot-scope="scope">
+                      <svg-icon v-for="n in +scope.row.rate" :key="n" icon-class="star" class="meta-item__icon" />
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="人数" align="center" width="100">
+                    <template slot-scope="{row}">
+                      <span
+                        v-if="row.stu_number"
+                        class="link-type"
+                        @click="handleFetchPv(row.stu_number)"
+                      >{{ row.stu_number }}</span>
+                      <span v-else>0</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="Date" width="110" align="center">
+                    <template slot-scope="scope">
+                      <el-dropdown v-if="scope.row.time">
+                        <span class="el-dropdown-link">
+                          学时：{{ scope.row.time.length }}<i class="el-icon-arrow-down el-icon--right" />
+                        </span>
+                        <el-dropdown-menu
+                          slot="dropdown"
+                        >
+                          <el-dropdown-item
+                            v-for="t of scope.row.time"
+                            disabled
+                          >{{ t.weeks }}周-星期{{ t.week }}-{{ t.lesson }}</el-dropdown-item>
+                        </el-dropdown-menu>
+                      </el-dropdown>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-collapse-item>
+            </el-collapse>
           </el-card>
         </el-timeline-item>
-        <el-timeline-item timestamp="大二上" placement="top">
+        <el-timeline-item timestamp="3" placement="top">
           <el-card>
-            <h4>更新 Github 模板</h4>
-            <p>王小虎 提交于 2018/4/2 20:46</p>
+            <el-collapse v-model="activeNames" @change="handleChange">
+              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="1">
+                <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
+                <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
+
+                <h4>更新 Github 模板</h4>
+                <p>王小虎 提交于 2018/4/12 20:46</p>
+
+                <el-table
+                  :key="tableKey"
+                  v-loading="listLoading"
+                  :data="list"
+                  border
+                  fit
+                  highlight-current-row
+                  style="width: 100%;"
+                  @sort-change="sortChange"
+                >
+                  <el-table-column
+                    align="center"
+                    type="index"
+                    width="50"
+                    fixed
+                  />
+                  <el-table-column label="ID" prop="id" sortable align="center" width="80">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.id }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column label="课程" min-width="150px">
+                    <template slot-scope="{row}">
+                      <span class="link-type" @click="handleUpdate(row)">{{ row.name }}</span>
+                      <!--          <el-tag>{{ row.type | typeFilter }}</el-tag>-->
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="教师" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.teacher }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column v-if="showHidden" label="Reviewer" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span style="color:red;">{{ scope.row.reviewer }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="学分" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.credit }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <!-- todo 只读分数展示允许半星-->
+                  <el-table-column label="评分" width="100">
+                    <template slot-scope="scope">
+                      <svg-icon v-for="n in +scope.row.rate" :key="n" icon-class="star" class="meta-item__icon" />
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="人数" align="center" width="100">
+                    <template slot-scope="{row}">
+                      <span
+                        v-if="row.stu_number"
+                        class="link-type"
+                        @click="handleFetchPv(row.stu_number)"
+                      >{{ row.stu_number }}</span>
+                      <span v-else>0</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="Date" width="110" align="center">
+                    <template slot-scope="scope">
+                      <el-dropdown v-if="scope.row.time">
+                        <span class="el-dropdown-link">
+                          学时：{{ scope.row.time.length }}<i class="el-icon-arrow-down el-icon--right" />
+                        </span>
+                        <el-dropdown-menu
+                          slot="dropdown"
+                        >
+                          <el-dropdown-item
+                            v-for="t of scope.row.time"
+                            disabled
+                          >{{ t.weeks }}周-星期{{ t.week }}-{{ t.lesson }}</el-dropdown-item>
+                        </el-dropdown-menu>
+                      </el-dropdown>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-collapse-item>
+            </el-collapse>
+          </el-card>
+        </el-timeline-item>
+        <el-timeline-item timestamp="4" placement="top">
+          <el-card>
+            <el-collapse v-model="activeNames" @change="handleChange">
+              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="1">
+                <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
+                <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
+
+                <h4>更新 Github 模板</h4>
+                <p>王小虎 提交于 2018/4/12 20:46</p>
+
+                <el-table
+                  :key="tableKey"
+                  v-loading="listLoading"
+                  :data="list"
+                  border
+                  fit
+                  highlight-current-row
+                  style="width: 100%;"
+                  @sort-change="sortChange"
+                >
+                  <el-table-column
+                    align="center"
+                    type="index"
+                    width="50"
+                    fixed
+                  />
+                  <el-table-column label="ID" prop="id" sortable align="center" width="80">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.id }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column label="课程" min-width="150px">
+                    <template slot-scope="{row}">
+                      <span class="link-type" @click="handleUpdate(row)">{{ row.name }}</span>
+                      <!--          <el-tag>{{ row.type | typeFilter }}</el-tag>-->
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="教师" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.teacher }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column v-if="showHidden" label="Reviewer" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span style="color:red;">{{ scope.row.reviewer }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="学分" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.credit }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <!-- todo 只读分数展示允许半星-->
+                  <el-table-column label="评分" width="100">
+                    <template slot-scope="scope">
+                      <svg-icon v-for="n in +scope.row.rate" :key="n" icon-class="star" class="meta-item__icon" />
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="人数" align="center" width="100">
+                    <template slot-scope="{row}">
+                      <span
+                        v-if="row.stu_number"
+                        class="link-type"
+                        @click="handleFetchPv(row.stu_number)"
+                      >{{ row.stu_number }}</span>
+                      <span v-else>0</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="Date" width="110" align="center">
+                    <template slot-scope="scope">
+                      <el-dropdown v-if="scope.row.time">
+                        <span class="el-dropdown-link">
+                          学时：{{ scope.row.time.length }}<i class="el-icon-arrow-down el-icon--right" />
+                        </span>
+                        <el-dropdown-menu
+                          slot="dropdown"
+                        >
+                          <el-dropdown-item
+                            v-for="t of scope.row.time"
+                            disabled
+                          >{{ t.weeks }}周-星期{{ t.week }}-{{ t.lesson }}</el-dropdown-item>
+                        </el-dropdown-menu>
+                      </el-dropdown>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-collapse-item>
+            </el-collapse>
+          </el-card>
+        </el-timeline-item>
+        <el-timeline-item timestamp="5" placement="top">
+          <el-card>
+            <el-collapse v-model="activeNames" @change="handleChange">
+              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="1">
+                <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
+                <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
+
+                <h4>更新 Github 模板</h4>
+                <p>王小虎 提交于 2018/4/12 20:46</p>
+
+                <el-table
+                  :key="tableKey"
+                  v-loading="listLoading"
+                  :data="list"
+                  border
+                  fit
+                  highlight-current-row
+                  style="width: 100%;"
+                  @sort-change="sortChange"
+                >
+                  <el-table-column
+                    align="center"
+                    type="index"
+                    width="50"
+                    fixed
+                  />
+                  <el-table-column label="ID" prop="id" sortable align="center" width="80">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.id }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column label="课程" min-width="150px">
+                    <template slot-scope="{row}">
+                      <span class="link-type" @click="handleUpdate(row)">{{ row.name }}</span>
+                      <!--          <el-tag>{{ row.type | typeFilter }}</el-tag>-->
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="教师" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.teacher }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column v-if="showHidden" label="Reviewer" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span style="color:red;">{{ scope.row.reviewer }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="学分" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.credit }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <!-- todo 只读分数展示允许半星-->
+                  <el-table-column label="评分" width="100">
+                    <template slot-scope="scope">
+                      <svg-icon v-for="n in +scope.row.rate" :key="n" icon-class="star" class="meta-item__icon" />
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="人数" align="center" width="100">
+                    <template slot-scope="{row}">
+                      <span
+                        v-if="row.stu_number"
+                        class="link-type"
+                        @click="handleFetchPv(row.stu_number)"
+                      >{{ row.stu_number }}</span>
+                      <span v-else>0</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="Date" width="110" align="center">
+                    <template slot-scope="scope">
+                      <el-dropdown v-if="scope.row.time">
+                        <span class="el-dropdown-link">
+                          学时：{{ scope.row.time.length }}<i class="el-icon-arrow-down el-icon--right" />
+                        </span>
+                        <el-dropdown-menu
+                          slot="dropdown"
+                        >
+                          <el-dropdown-item
+                            v-for="t of scope.row.time"
+                            disabled
+                          >{{ t.weeks }}周-星期{{ t.week }}-{{ t.lesson }}</el-dropdown-item>
+                        </el-dropdown-menu>
+                      </el-dropdown>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-collapse-item>
+            </el-collapse>
+          </el-card>
+        </el-timeline-item>
+        <el-timeline-item timestamp="6" placement="top">
+          <el-card>
+            <el-collapse v-model="activeNames" @change="handleChange">
+              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="1">
+                <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
+                <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
+
+                <h4>更新 Github 模板</h4>
+                <p>王小虎 提交于 2018/4/12 20:46</p>
+
+                <el-table
+                  :key="tableKey"
+                  v-loading="listLoading"
+                  :data="list"
+                  border
+                  fit
+                  highlight-current-row
+                  style="width: 100%;"
+                  @sort-change="sortChange"
+                >
+                  <el-table-column
+                    align="center"
+                    type="index"
+                    width="50"
+                    fixed
+                  />
+                  <el-table-column label="ID" prop="id" sortable align="center" width="80">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.id }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column label="课程" min-width="150px">
+                    <template slot-scope="{row}">
+                      <span class="link-type" @click="handleUpdate(row)">{{ row.name }}</span>
+                      <!--          <el-tag>{{ row.type | typeFilter }}</el-tag>-->
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="教师" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.teacher }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column v-if="showHidden" label="Reviewer" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span style="color:red;">{{ scope.row.reviewer }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="学分" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.credit }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <!-- todo 只读分数展示允许半星-->
+                  <el-table-column label="评分" width="100">
+                    <template slot-scope="scope">
+                      <svg-icon v-for="n in +scope.row.rate" :key="n" icon-class="star" class="meta-item__icon" />
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="人数" align="center" width="100">
+                    <template slot-scope="{row}">
+                      <span
+                        v-if="row.stu_number"
+                        class="link-type"
+                        @click="handleFetchPv(row.stu_number)"
+                      >{{ row.stu_number }}</span>
+                      <span v-else>0</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="Date" width="110" align="center">
+                    <template slot-scope="scope">
+                      <el-dropdown v-if="scope.row.time">
+                        <span class="el-dropdown-link">
+                          学时：{{ scope.row.time.length }}<i class="el-icon-arrow-down el-icon--right" />
+                        </span>
+                        <el-dropdown-menu
+                          slot="dropdown"
+                        >
+                          <el-dropdown-item
+                            v-for="t of scope.row.time"
+                            disabled
+                          >{{ t.weeks }}周-星期{{ t.week }}-{{ t.lesson }}</el-dropdown-item>
+                        </el-dropdown-menu>
+                      </el-dropdown>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-collapse-item>
+            </el-collapse>
+          </el-card>
+        </el-timeline-item>
+        <el-timeline-item timestamp="7" placement="top">
+          <el-card>
+            <el-collapse v-model="activeNames" @change="handleChange">
+              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="1">
+                <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
+                <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
+
+                <h4>更新 Github 模板</h4>
+                <p>王小虎 提交于 2018/4/12 20:46</p>
+
+                <el-table
+                  :key="tableKey"
+                  v-loading="listLoading"
+                  :data="list"
+                  border
+                  fit
+                  highlight-current-row
+                  style="width: 100%;"
+                  @sort-change="sortChange"
+                >
+                  <el-table-column
+                    align="center"
+                    type="index"
+                    width="50"
+                    fixed
+                  />
+                  <el-table-column label="ID" prop="id" sortable align="center" width="80">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.id }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column label="课程" min-width="150px">
+                    <template slot-scope="{row}">
+                      <span class="link-type" @click="handleUpdate(row)">{{ row.name }}</span>
+                      <!--          <el-tag>{{ row.type | typeFilter }}</el-tag>-->
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="教师" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.teacher }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column v-if="showHidden" label="Reviewer" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span style="color:red;">{{ scope.row.reviewer }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="学分" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.credit }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <!-- todo 只读分数展示允许半星-->
+                  <el-table-column label="评分" width="100">
+                    <template slot-scope="scope">
+                      <svg-icon v-for="n in +scope.row.rate" :key="n" icon-class="star" class="meta-item__icon" />
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="人数" align="center" width="100">
+                    <template slot-scope="{row}">
+                      <span
+                        v-if="row.stu_number"
+                        class="link-type"
+                        @click="handleFetchPv(row.stu_number)"
+                      >{{ row.stu_number }}</span>
+                      <span v-else>0</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="Date" width="110" align="center">
+                    <template slot-scope="scope">
+                      <el-dropdown v-if="scope.row.time">
+                        <span class="el-dropdown-link">
+                          学时：{{ scope.row.time.length }}<i class="el-icon-arrow-down el-icon--right" />
+                        </span>
+                        <el-dropdown-menu
+                          slot="dropdown"
+                        >
+                          <el-dropdown-item
+                            v-for="t of scope.row.time"
+                            disabled
+                          >{{ t.weeks }}周-星期{{ t.week }}-{{ t.lesson }}</el-dropdown-item>
+                        </el-dropdown-menu>
+                      </el-dropdown>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-collapse-item>
+            </el-collapse>
+          </el-card>
+        </el-timeline-item>
+        <el-timeline-item timestamp="8" placement="top">
+          <el-card>
+            <el-collapse v-model="activeNames" @change="handleChange">
+              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="1">
+                <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
+                <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
+
+                <h4>更新 Github 模板</h4>
+                <p>王小虎 提交于 2018/4/12 20:46</p>
+
+                <el-table
+                  :key="tableKey"
+                  v-loading="listLoading"
+                  :data="list"
+                  border
+                  fit
+                  highlight-current-row
+                  style="width: 100%;"
+                  @sort-change="sortChange"
+                >
+                  <el-table-column
+                    align="center"
+                    type="index"
+                    width="50"
+                    fixed
+                  />
+                  <el-table-column label="ID" prop="id" sortable align="center" width="80">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.id }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column label="课程" min-width="150px">
+                    <template slot-scope="{row}">
+                      <span class="link-type" @click="handleUpdate(row)">{{ row.name }}</span>
+                      <!--          <el-tag>{{ row.type | typeFilter }}</el-tag>-->
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="教师" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.teacher }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column v-if="showHidden" label="Reviewer" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span style="color:red;">{{ scope.row.reviewer }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="学分" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.credit }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <!-- todo 只读分数展示允许半星-->
+                  <el-table-column label="评分" width="100">
+                    <template slot-scope="scope">
+                      <svg-icon v-for="n in +scope.row.rate" :key="n" icon-class="star" class="meta-item__icon" />
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="人数" align="center" width="100">
+                    <template slot-scope="{row}">
+                      <span
+                        v-if="row.stu_number"
+                        class="link-type"
+                        @click="handleFetchPv(row.stu_number)"
+                      >{{ row.stu_number }}</span>
+                      <span v-else>0</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="Date" width="110" align="center">
+                    <template slot-scope="scope">
+                      <el-dropdown v-if="scope.row.time">
+                        <span class="el-dropdown-link">
+                          学时：{{ scope.row.time.length }}<i class="el-icon-arrow-down el-icon--right" />
+                        </span>
+                        <el-dropdown-menu
+                          slot="dropdown"
+                        >
+                          <el-dropdown-item
+                            v-for="t of scope.row.time"
+                            disabled
+                          >{{ t.weeks }}周-星期{{ t.week }}-{{ t.lesson }}</el-dropdown-item>
+                        </el-dropdown-menu>
+                      </el-dropdown>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-collapse-item>
+            </el-collapse>
+          </el-card>
+        </el-timeline-item>
+        <el-timeline-item timestamp="9" placement="top">
+          <el-card>
+            <el-collapse v-model="activeNames" @change="handleChange">
+              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="1">
+                <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
+                <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
+
+                <h4>更新 Github 模板</h4>
+                <p>王小虎 提交于 2018/4/12 20:46</p>
+
+                <el-table
+                  :key="tableKey"
+                  v-loading="listLoading"
+                  :data="list"
+                  border
+                  fit
+                  highlight-current-row
+                  style="width: 100%;"
+                  @sort-change="sortChange"
+                >
+                  <el-table-column
+                    align="center"
+                    type="index"
+                    width="50"
+                    fixed
+                  />
+                  <el-table-column label="ID" prop="id" sortable align="center" width="80">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.id }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column label="课程" min-width="150px">
+                    <template slot-scope="{row}">
+                      <span class="link-type" @click="handleUpdate(row)">{{ row.name }}</span>
+                      <!--          <el-tag>{{ row.type | typeFilter }}</el-tag>-->
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="教师" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.teacher }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column v-if="showHidden" label="Reviewer" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span style="color:red;">{{ scope.row.reviewer }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="学分" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.credit }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <!-- todo 只读分数展示允许半星-->
+                  <el-table-column label="评分" width="100">
+                    <template slot-scope="scope">
+                      <svg-icon v-for="n in +scope.row.rate" :key="n" icon-class="star" class="meta-item__icon" />
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="人数" align="center" width="100">
+                    <template slot-scope="{row}">
+                      <span
+                        v-if="row.stu_number"
+                        class="link-type"
+                        @click="handleFetchPv(row.stu_number)"
+                      >{{ row.stu_number }}</span>
+                      <span v-else>0</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="Date" width="110" align="center">
+                    <template slot-scope="scope">
+                      <el-dropdown v-if="scope.row.time">
+                        <span class="el-dropdown-link">
+                          学时：{{ scope.row.time.length }}<i class="el-icon-arrow-down el-icon--right" />
+                        </span>
+                        <el-dropdown-menu
+                          slot="dropdown"
+                        >
+                          <el-dropdown-item
+                            v-for="t of scope.row.time"
+                            disabled
+                          >{{ t.weeks }}周-星期{{ t.week }}-{{ t.lesson }}</el-dropdown-item>
+                        </el-dropdown-menu>
+                      </el-dropdown>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-collapse-item>
+            </el-collapse>
+          </el-card>
+        </el-timeline-item>
+        <el-timeline-item timestamp="10" placement="top">
+          <el-card>
+            <el-collapse v-model="activeNames" @change="handleChange">
+              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="1">
+                <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
+                <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
+
+                <h4>更新 Github 模板</h4>
+                <p>王小虎 提交于 2018/4/12 20:46</p>
+
+                <el-table
+                  :key="tableKey"
+                  v-loading="listLoading"
+                  :data="list"
+                  border
+                  fit
+                  highlight-current-row
+                  style="width: 100%;"
+                  @sort-change="sortChange"
+                >
+                  <el-table-column
+                    align="center"
+                    type="index"
+                    width="50"
+                    fixed
+                  />
+                  <el-table-column label="ID" prop="id" sortable align="center" width="80">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.id }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column label="课程" min-width="150px">
+                    <template slot-scope="{row}">
+                      <span class="link-type" @click="handleUpdate(row)">{{ row.name }}</span>
+                      <!--          <el-tag>{{ row.type | typeFilter }}</el-tag>-->
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="教师" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.teacher }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column v-if="showHidden" label="Reviewer" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span style="color:red;">{{ scope.row.reviewer }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="学分" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.credit }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <!-- todo 只读分数展示允许半星-->
+                  <el-table-column label="评分" width="100">
+                    <template slot-scope="scope">
+                      <svg-icon v-for="n in +scope.row.rate" :key="n" icon-class="star" class="meta-item__icon" />
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="人数" align="center" width="100">
+                    <template slot-scope="{row}">
+                      <span
+                        v-if="row.stu_number"
+                        class="link-type"
+                        @click="handleFetchPv(row.stu_number)"
+                      >{{ row.stu_number }}</span>
+                      <span v-else>0</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="Date" width="110" align="center">
+                    <template slot-scope="scope">
+                      <el-dropdown v-if="scope.row.time">
+                        <span class="el-dropdown-link">
+                          学时：{{ scope.row.time.length }}<i class="el-icon-arrow-down el-icon--right" />
+                        </span>
+                        <el-dropdown-menu
+                          slot="dropdown"
+                        >
+                          <el-dropdown-item
+                            v-for="t of scope.row.time"
+                            disabled
+                          >{{ t.weeks }}周-星期{{ t.week }}-{{ t.lesson }}</el-dropdown-item>
+                        </el-dropdown-menu>
+                      </el-dropdown>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-collapse-item>
+            </el-collapse>
+          </el-card>
+        </el-timeline-item>
+        <el-timeline-item timestamp="11" placement="top">
+          <el-card>
+            <el-collapse v-model="activeNames" @change="handleChange">
+              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="1">
+                <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
+                <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
+
+                <h4>更新 Github 模板</h4>
+                <p>王小虎 提交于 2018/4/12 20:46</p>
+
+                <el-table
+                  :key="tableKey"
+                  v-loading="listLoading"
+                  :data="list"
+                  border
+                  fit
+                  highlight-current-row
+                  style="width: 100%;"
+                  @sort-change="sortChange"
+                >
+                  <el-table-column
+                    align="center"
+                    type="index"
+                    width="50"
+                    fixed
+                  />
+                  <el-table-column label="ID" prop="id" sortable align="center" width="80">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.id }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column label="课程" min-width="150px">
+                    <template slot-scope="{row}">
+                      <span class="link-type" @click="handleUpdate(row)">{{ row.name }}</span>
+                      <!--          <el-tag>{{ row.type | typeFilter }}</el-tag>-->
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="教师" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.teacher }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column v-if="showHidden" label="Reviewer" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span style="color:red;">{{ scope.row.reviewer }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="学分" width="100" align="center">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.credit }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <!-- todo 只读分数展示允许半星-->
+                  <el-table-column label="评分" width="100">
+                    <template slot-scope="scope">
+                      <svg-icon v-for="n in +scope.row.rate" :key="n" icon-class="star" class="meta-item__icon" />
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="人数" align="center" width="100">
+                    <template slot-scope="{row}">
+                      <span
+                        v-if="row.stu_number"
+                        class="link-type"
+                        @click="handleFetchPv(row.stu_number)"
+                      >{{ row.stu_number }}</span>
+                      <span v-else>0</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="Date" width="110" align="center">
+                    <template slot-scope="scope">
+                      <el-dropdown v-if="scope.row.time">
+                        <span class="el-dropdown-link">
+                          学时：{{ scope.row.time.length }}<i class="el-icon-arrow-down el-icon--right" />
+                        </span>
+                        <el-dropdown-menu
+                          slot="dropdown"
+                        >
+                          <el-dropdown-item
+                            v-for="t of scope.row.time"
+                            disabled
+                          >{{ t.weeks }}周-星期{{ t.week }}-{{ t.lesson }}</el-dropdown-item>
+                        </el-dropdown-menu>
+                      </el-dropdown>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-collapse-item>
+            </el-collapse>
           </el-card>
         </el-timeline-item>
       </el-timeline>
@@ -44,6 +1032,7 @@
 </template>
 
 <script>
+import { fetchList, fetchAllList } from '@/api/course'
 
 export default {
   name: 'Allplan',
@@ -54,6 +1043,24 @@ export default {
     return {
       filterText: '',
       show: true,
+      tableKey: 0,
+      list: null,
+      alllist: null,
+      total: 0,
+      listLoading: true,
+      listQuery: {
+        page: 1,
+        limit: 10,
+        importance: undefined,
+        title: undefined,
+        type: undefined,
+        sort: '+id'
+      },
+      importanceOptions: [1, 2, 3, 4, 5],
+      sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
+      statusOptions: ['Optional', 'NotOptional'],
+      showHidden: false,
+      showSemester: false,
       data: [{
         id: 1,
         label: '计算机科学与工程学院',
@@ -138,7 +1145,9 @@ export default {
       this.$refs.tree.filter(val)
     }
   },
-
+  created() {
+    this.getList()
+  },
   methods: {
     filterNode(value, data) {
       if (!value) return true
@@ -154,6 +1163,41 @@ export default {
     goBack() {
       this.show = true
       console.log(this.show)
+    },
+    getList() {
+      this.listLoading = true
+      fetchList(this.listQuery).then(response => {
+        const items = response.data.items
+        for (const i in items) {
+          // items[i].time = this.timeSort(items[i].time)
+          items[i].time = this.sortByWeeks(items[i].time)
+        }
+        // console.log(items)
+        this.list = items
+        this.total = response.data.total
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false
+        }, 1.5 * 1000)
+      })
+      fetchAllList().then(response => {
+        this.alllist = response.items
+      })
+    },
+    sortByWeeks(list) {
+      return list.sort((a, b) => {
+        if (a.weeks < b.weeks) {
+          return -1
+        } else if (a.weeks === b.weeks) {
+          if (a.week < b.week) {
+            return -1
+          } else {
+            return 1
+          }
+        } else {
+          return 1
+        }
+      })
     }
   }
 

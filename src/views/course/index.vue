@@ -35,7 +35,7 @@
       <el-button v-if="activeName==='2'" v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
       </el-button>
-      <el-button v-else disabled v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+      <el-button v-else v-waves disabled class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
       </el-button>
     </div>
@@ -229,16 +229,15 @@
             </template>
           </el-table-column>
         </el-table>
+        <pagination
+          v-show="total>0"
+          :total="total"
+          :page.sync="listQuery.page"
+          :limit.sync="listQuery.limit"
+          @pagination="getList"
+        />
       </el-collapse-item>
     </el-collapse>
-
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="listQuery.page"
-      :limit.sync="listQuery.limit"
-      @pagination="getList"
-    />
 
   </div>
 </template>
