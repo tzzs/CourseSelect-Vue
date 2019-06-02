@@ -21,7 +21,7 @@
       <el-timeline>
         <el-timeline-item timestamp="1" placement="top">
           <el-card>
-            <el-collapse v-model="activeNames" @change="handleChange">
+            <el-collapse v-model="activeNames" accordion @change="handleChange">
               <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="1">
                 <router-link to="/manage/course/index"><el-button style="margin-bottom: 1%">管理</el-button></router-link>
                 <el-table
@@ -107,8 +107,8 @@
         </el-timeline-item>
         <el-timeline-item timestamp="2" placement="top">
           <el-card>
-            <el-collapse v-model="activeNames" @change="handleChange">
-              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="1">
+            <el-collapse v-model="activeNames" accordion @change="handleChange">
+              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="2">
                 <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
                 <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
 
@@ -200,7 +200,7 @@
         <el-timeline-item timestamp="3" placement="top">
           <el-card>
             <el-collapse v-model="activeNames" @change="handleChange">
-              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="1">
+              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="3">
                 <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
                 <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
 
@@ -292,7 +292,7 @@
         <el-timeline-item timestamp="4" placement="top">
           <el-card>
             <el-collapse v-model="activeNames" @change="handleChange">
-              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="1">
+              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="4">
                 <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
                 <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
 
@@ -384,7 +384,7 @@
         <el-timeline-item timestamp="5" placement="top">
           <el-card>
             <el-collapse v-model="activeNames" @change="handleChange">
-              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="1">
+              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="5">
                 <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
                 <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
 
@@ -476,7 +476,7 @@
         <el-timeline-item timestamp="6" placement="top">
           <el-card>
             <el-collapse v-model="activeNames" @change="handleChange">
-              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="1">
+              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="6">
                 <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
                 <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
 
@@ -568,7 +568,7 @@
         <el-timeline-item timestamp="7" placement="top">
           <el-card>
             <el-collapse v-model="activeNames" @change="handleChange">
-              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="1">
+              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="7">
                 <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
                 <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
 
@@ -660,7 +660,7 @@
         <el-timeline-item timestamp="8" placement="top">
           <el-card>
             <el-collapse v-model="activeNames" @change="handleChange">
-              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="1">
+              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="8">
                 <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
                 <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
 
@@ -751,8 +751,8 @@
         </el-timeline-item>
         <el-timeline-item timestamp="9" placement="top">
           <el-card>
-            <el-collapse v-model="activeNames" @change="handleChange">
-              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="1">
+            <el-collapse v-model="activeNames" accordion @change="handleChange">
+              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="9">
                 <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
                 <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
 
@@ -844,7 +844,7 @@
         <el-timeline-item timestamp="10" placement="top">
           <el-card>
             <el-collapse v-model="activeNames" @change="handleChange">
-              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="1">
+              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="10">
                 <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
                 <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
 
@@ -936,7 +936,7 @@
         <el-timeline-item timestamp="11" placement="top">
           <el-card>
             <el-collapse v-model="activeNames" @change="handleChange">
-              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="1">
+              <el-collapse-item title="培养计划 Undergraduate program (点击展开)" name="11">
                 <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
                 <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
 
