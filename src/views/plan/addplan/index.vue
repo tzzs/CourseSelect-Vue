@@ -306,6 +306,8 @@ export default {
     getPlanList() {
       fetchPlanList().then(response => {
         console.log(response.data.items)
+      }).catch(function(err) {
+        console.log(err)
       })
     },
     getList() {
