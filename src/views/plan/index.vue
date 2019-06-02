@@ -8,7 +8,6 @@
         </el-tab-pane>
         <el-tab-pane>
           <span slot="label"><svg-icon icon-class="add" /> &nbsp; 计划管理</span>
-          <addplan />
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -17,12 +16,10 @@
 
 <script>
 import allplan from './allplan'
-import addplan from './addplan'
 export default {
   name: 'Plan',
   components: {
-    allplan,
-    addplan
+    allplan
   }
 }
 </script>

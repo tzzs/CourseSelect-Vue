@@ -7,3 +7,11 @@ export function fetchPlanList(query) {
     params: query
   })
 }
+
+export function getPlanList(query) {
+  return request({
+    url: '/plan/getList',
+    method: 'get',
+    params: query
+  })
+}
