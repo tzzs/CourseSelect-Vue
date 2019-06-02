@@ -15,8 +15,8 @@
         @node-click="handleNodeClick"
       />
     </div>
-
     <div v-show="!show">
+      <el-button icon="el-icon-arrow-left" style="margin:0 0 2% 4%" @click="goBack()">返回</el-button>
       <el-timeline>
         <el-timeline-item timestamp="大一上" placement="top">
           <el-card>
@@ -47,6 +47,9 @@
 
 export default {
   name: 'Allplan',
+  components: {
+
+  },
   data() {
     return {
       filterText: '',
@@ -150,6 +153,7 @@ export default {
     },
     goBack() {
       this.show = true
+      console.log(this.show)
     }
   }
 
