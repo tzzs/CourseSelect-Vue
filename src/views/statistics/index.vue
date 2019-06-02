@@ -54,8 +54,8 @@
             <el-table-column
               align="center"
               type="index"
-              width="50">
-            </el-table-column>
+              width="50"
+            />
             <el-table-column label="学号">
               <template slot-scope="scope">
                 <span>{{ scope.row.id }}</span>
@@ -69,15 +69,28 @@
             <el-table-column label="班级">
               <template slot-scope="scope">
                 <span>{{ scope.row.class }}</span>
-              </template></el-table-column>
+              </template>
+            </el-table-column>
             <el-table-column label="专业">
               <template slot-scope="scope">
                 <span>{{ scope.row.profession }}</span>
-              </template></el-table-column>
+              </template>
+            </el-table-column>
             <el-table-column label="学院">
               <template slot-scope="scope">
                 <span>{{ scope.row.college }}</span>
-              </template></el-table-column>
+              </template>
+            </el-table-column>
+            <el-table-column label="Actions" align="center" class-name="small-padding fixed-width" width="200">
+              <template slot-scope="{row}">
+                <el-button size="mini" type="primary" @click="handleRate(row)">
+                  Rate
+                </el-button>
+                <el-button size="mini" type="danger" @click="handleDelete(row)">
+                  Delete
+                </el-button>
+              </template>
+            </el-table-column>
           </el-table>
         </template>
       </el-table-column>
@@ -237,25 +250,25 @@ export default {
     },
     handleRate(row) {
       console.log(row)
-      this.$prompt('请输入评分', '提示', {
+      this.$prompt('请输入最终成绩', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         inputPlaceholder: row.irate,
         inputValidator: (value) => {
           if (!isNaN(Number(value))) {
-            if (value < 1 || value > 5) {
+            if (value < 1 || value > 100) {
               return false
             }
           } else {
-            return '非法数据，评分在1~5之间'
+            return '非法数据，成绩在1~100之间'
           }
         },
-        inputErrorMessage: '评分在1~5之间'
+        inputErrorMessage: '评分在1~100之间'
       }
       ).then(({ value }) => {
         this.$message({
           type: 'success',
-          message: '你的评分是: ' + value
+          message: '此成绩为: ' + value
         })
         for (const v of this.list) {
           if (v.id === row.id) {
