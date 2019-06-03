@@ -8,9 +8,9 @@ for (let i = 0; i < count; i++) {
     'id': '@integer(10000,99999)',
     'name': '@ctitle',
     'period': '@integer(10,20)',
-    'credit': '@integer(2,8)',
+    'credit': '@integer(1,8)',
     'semester': '@integer(1,10)',
-    'teacher': '@first',
+    'teacher': '@cname',
     'stu_number': '@integer(40,120)',
     'time|1-16': [{
       'date': '@date(yyyy-MM-dd)',

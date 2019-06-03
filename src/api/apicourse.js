@@ -7,3 +7,11 @@ export function getCourseList(query) {
     params: query
   })
 }
+
+export function addMock(params) {
+  return request({
+    url: '/api/course/addMock',
+    method: 'post',
+    params
+  })
+}

@@ -241,6 +241,8 @@ import { fetchList, fetchPv, fetchAllList, createCourse, updateCourse } from '@/
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+import { addMock } from '../../../api/apicourse'
+
 const calendarTypeOptions = [
   { key: 'CN', display_name: 'China' },
   { key: 'US', display_name: 'USA' },
@@ -326,6 +328,7 @@ export default {
         for (const i in items) {
           // items[i].time = this.timeSort(items[i].time)
           items[i].time = this.sortByWeeks(items[i].time)
+          // addMock(items[i])
         }
         // console.log(items)
         this.list = items
