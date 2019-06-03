@@ -23,7 +23,7 @@
         style="margin-left: 10px;"
         type="primary"
         icon="el-icon-edit"
-        @click="handleCreate"
+        @click="handleAdd"
       >
         Add
       </el-button>
@@ -105,6 +105,30 @@
       @pagination="getPlanList"
     />
 
+    <el-dialog
+      v-loading="searchLoading"
+      title="课程增加"
+      :visible.sync="searchShow"
+    >
+      <el-input
+        v-model="search.id"
+        placeholder="ID"
+        style="width: 250px;"
+        prefix-icon="el-icon-search"
+        clearable
+        class="filter-item"
+      />
+      <el-input
+        v-model="search.name"
+        placeholder="Name"
+        style="width: 250px;"
+        prefix-icon="el-icon-search"
+        clearable
+        class="filter-item"
+      />
+      <el-button type="primary" class="filter-item">搜索</el-button>
+    </el-dialog>
+
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form
         ref="dataForm"
@@ -172,6 +196,7 @@ import { fetchList, fetchPv, fetchAllList, createCourse, updateCourse } from '@/
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 import { getPlanList } from '@/api/plan'
+import { getCourseList } from '@/api/apicourse'
 
 export default {
   name: 'Allplan',
@@ -236,7 +261,15 @@ export default {
 
       grades: null,
       colleges: null,
-      professions: null
+      professions: null,
+
+      searchLoading: false,
+      searchShow: false,
+      search: {
+        id: null,
+        name: null
+      },
+      courseList: null
     }
   },
   watch: {
@@ -259,7 +292,6 @@ export default {
         this.colleges = data.colleges
         this.professions = data.professions
 
-        console.log(data)
         this.listLoading = false
       }).catch(function(err) {
         console.log(err)
@@ -283,6 +315,13 @@ export default {
       })
       fetchAllList().then(response => {
         this.alllist = response.items
+      })
+    },
+    getCourseList() {
+      getCourseList().then(response => {
+        this.courseList = response.data.items
+        this.searchLoading = false
+        console.log(this.courseList)
       })
     },
     filterNode(value, data) {
@@ -328,6 +367,11 @@ export default {
         this.listQuery.sort = '-id'
       }
       this.handleFilter()
+    },
+    handleAdd() {
+      this.searchLoading = true
+      this.getCourseList()
+      this.searchShow = true
     },
     handleCreate() {
       this.resetTemp()

@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function fetchCourseList(query) {
+export function getCourseList(query) {
   return request({
     url: '/api/course/list',
     method: 'get',
