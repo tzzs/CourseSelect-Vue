@@ -55,11 +55,6 @@
           <span class="link-type" @click="handleUpdate(row)">{{ row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="教师" width="100" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.teacher }}</span>
-        </template>
-      </el-table-column>
       <el-table-column v-if="showHidden" label="学期" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.semester }}</span>
@@ -70,23 +65,9 @@
           <span>{{ scope.row.credit }}</span>
         </template>
       </el-table-column>
-
-      <!-- todo 只读分数展示允许半星-->
-      <el-table-column label="评分" width="100">
+      <el-table-column label="考核方式" width="100" align="center">
         <template slot-scope="scope">
-          <div v-if="scope.rate">
-            <svg-icon v-for="n in + parseInt(scope.row.rate) " :key="n" icon-class="star" class="meta-item__icon" />
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column label="人数" align="center" width="100">
-        <template slot-scope="{row}">
-          <span
-            v-if="row.stu_number"
-            class="link-type"
-            @click="handleFetchPv(row.stu_number)"
-          >{{ row.stu_number }}</span>
-          <span v-else>0</span>
+          <span>{{ scope.row.evaluation }}</span>
         </template>
       </el-table-column>
       <el-table-column label="课程性质" width="110" align="center">
@@ -99,19 +80,13 @@
           <span>{{ row.semester }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Actions" align="center" class-name="small-padding fixed-width" width="240">
+      <el-table-column label="起始结束周" class-name="status-col" width="110">
         <template slot-scope="{row}">
-          <el-button
-            v-if="row.status!='Optional'"
-            size="mini"
-            type="success"
-            @click="handleModifyStatus(row,'Optional')"
-          >
-            可选
-          </el-button>
-          <el-button v-if="row.status!='NotOptional'" size="mini" @click="handleModifyStatus(row,'NotOptional')">
-            不可选
-          </el-button>
+          <span>{{ row.week }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="Actions" align="center" class-name="small-padding fixed-width">
+        <template slot-scope="{row}">
           <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row)">
             Delete
           </el-button>
@@ -126,6 +101,68 @@
       :limit.sync="listQuery.limit"
       @pagination="getPlanList"
     />
+
+    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+      <el-form
+        ref="dataForm"
+        :rules="rules"
+        :model="temp"
+        label-position="left"
+        label-width="70px"
+        style="width: 400px; margin-left:50px;"
+      >
+        <el-form-item label="ID" prop="id">
+          <el-input v-if="dialogStatus!=='create'" v-model="temp.id" :disabled="true" />
+          <el-input v-else v-model="temp.id" />
+        </el-form-item>
+        <el-form-item label="Title" prop="name">
+          <el-input v-model="temp.name" />
+        </el-form-item>
+        <el-form-item label="Credit" prop="credit">
+          <el-input v-model="temp.credit" />
+        </el-form-item>
+        <el-form-item label="Teacher" prop="teacher">
+          <el-input v-model="temp.teacher" />
+        </el-form-item>
+        <el-form-item label="Number" prop="stu_number">
+          <el-input v-model="temp.stu_number" />
+        </el-form-item>
+        <el-form-item label="Semester" prop="semester">
+          <el-input v-model="temp.semester" />
+        </el-form-item>
+        <el-form-item label="Status" prop="status">
+          <el-select v-model="temp.status" class="filter-item" placeholder="Please select">
+            <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="Rate" prop="rate">
+          <el-rate
+            v-model="temp.rate"
+            :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
+            :max="5"
+            style="margin-top:8px;"
+          />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">
+          Cancel
+        </el-button>
+        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
+          Confirm
+        </el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog :visible.sync="dialogPvVisible" title="Reading statistics">
+      <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
+        <el-table-column prop="key" label="Channel" />
+        <el-table-column prop="pv" label="Pv" />
+      </el-table>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogPvVisible = false">Confirm</el-button>
+      </span>
+    </el-dialog>
   </div>
 
 </template>
@@ -174,6 +211,30 @@ export default {
       statusOptions: ['Optional', 'NotOptional'],
       showHidden: false,
       showSemester: false,
+      rules: {
+        type: [{ required: true, message: 'type is required', trigger: 'change' }],
+        timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
+        title: [{ required: true, message: 'title is required', trigger: 'blur' }]
+      },
+
+      temp: {
+        id: '',
+        name: '',
+        credit: '',
+        teacher: '',
+        stu_number: '',
+        semester: '',
+        status: '',
+        rate: 3
+      },
+      dialogFormVisible: false,
+      dialogStatus: '',
+      textMap: {
+        update: 'Edit',
+        create: 'Create'
+      },
+      dialogPvVisible: false,
+      pvData: [],
 
       grades: null,
       colleges: null,
@@ -200,7 +261,7 @@ export default {
         this.colleges = data.colleges
         this.professions = data.professions
 
-        console.log(this.list)
+        console.log(data)
         this.listLoading = false
       }).catch(function(err) {
         console.log(err)
@@ -304,6 +365,17 @@ export default {
       })
       const index = this.list.indexOf(row)
       this.list.splice(index, 1)
+    },
+    resetTemp() {
+      this.temp = {
+        name: '',
+        credit: '',
+        teacher: '',
+        stu_number: '',
+        semester: '',
+        status: '',
+        rate: 3
+      }
     }
   }
 
