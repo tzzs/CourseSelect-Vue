@@ -85,8 +85,11 @@
           <span>{{ row.week }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Actions" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="Actions" align="center" class-name="small-padding fixed-width" min-width="180px">
         <template slot-scope="{row}">
+          <el-button size="mini" type="success" @click="handleUpdate(row)">
+            Edit
+          </el-button>
           <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row)">
             Delete
           </el-button>
@@ -376,6 +379,39 @@ export default {
         status: '',
         rate: 3
       }
+    },
+    handleUpdate(row) {
+      this.temp = Object.assign({}, row) // copy obj
+      this.temp.timestamp = new Date(this.temp.timestamp)
+      this.dialogStatus = 'update'
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
+    },
+    updateData() {
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          const tempData = Object.assign({}, this.temp)
+          tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
+          updateCourse(tempData).then(() => {
+            for (const v of this.list) {
+              if (v.id === this.temp.id) {
+                const index = this.list.indexOf(v)
+                this.list.splice(index, 1, this.temp)
+                break
+              }
+            }
+            this.dialogFormVisible = false
+            this.$notify({
+              title: 'Success',
+              message: 'Update Successfully',
+              type: 'success',
+              duration: 2000
+            })
+          })
+        }
+      })
     }
   }
 
