@@ -116,6 +116,7 @@
         placeholder="请输入课程名或ID"
         :trigger-on-focus="false"
         class="filter-item"
+        style="width: 80%;"
         @select="handleSelect"
       >
         <template slot-scope="{ item }">
@@ -123,7 +124,7 @@
           <div class="name">{{ item.name }}</div>
         </template>
       </el-autocomplete>
-      <el-button type="primary" class="filter-item">搜索</el-button>
+      <el-button type="primary" class="filter-item">增加</el-button>
     </el-dialog>
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
@@ -267,7 +268,8 @@ export default {
         name: null
       },
       courseList: null,
-      state: ''
+      state: '',
+      addCourse: null
     }
   },
   watch: {
@@ -319,7 +321,6 @@ export default {
       getCourseList().then(response => {
         this.courseList = response.data.items
         this.searchLoading = false
-        console.log(this.courseList)
       })
     },
     filterNode(value, data) {
@@ -461,6 +462,8 @@ export default {
     },
     handleSelect(item) {
       console.log(item)
+      this.state = item.cid + '-' + item.name
+      this.addCourse = item
     }
   }
 
