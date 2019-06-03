@@ -55,7 +55,7 @@
           <span class="link-type" @click="handleUpdate(row)">{{ row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column v-if="showHidden" label="学期" align="center">
+      <el-table-column label="学期" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.semester }}</span>
         </template>
@@ -114,37 +114,33 @@
         label-width="70px"
         style="width: 400px; margin-left:50px;"
       >
-        <el-form-item label="ID" prop="id">
-          <el-input v-if="dialogStatus!=='create'" v-model="temp.id" :disabled="true" />
-          <el-input v-else v-model="temp.id" />
+        <el-form-item label="ID" prop="cid">
+          <el-input v-model="temp.cid" />
         </el-form-item>
-        <el-form-item label="Title" prop="name">
+        <el-form-item label="名称" prop="name">
           <el-input v-model="temp.name" />
         </el-form-item>
-        <el-form-item label="Credit" prop="credit">
+        <el-form-item label="学分" prop="credit">
           <el-input v-model="temp.credit" />
         </el-form-item>
-        <el-form-item label="Teacher" prop="teacher">
-          <el-input v-model="temp.teacher" />
-        </el-form-item>
-        <el-form-item label="Number" prop="stu_number">
-          <el-input v-model="temp.stu_number" />
-        </el-form-item>
-        <el-form-item label="Semester" prop="semester">
+        <el-form-item label="学期" prop="semester">
           <el-input v-model="temp.semester" />
         </el-form-item>
-        <el-form-item label="Status" prop="status">
-          <el-select v-model="temp.status" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
+        <el-form-item label="考核方式" prop="evaluation">
+          <el-select v-model="temp.evaluation" clearable>
+            <el-option
+              v-for="item in evaluations"
+              :key="item"
+              :label="item"
+              :value="item"
+            />
           </el-select>
         </el-form-item>
-        <el-form-item label="Rate" prop="rate">
-          <el-rate
-            v-model="temp.rate"
-            :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
-            :max="5"
-            style="margin-top:8px;"
-          />
+        <el-form-item label="课程性质" prop="type">
+          <el-input v-model="temp.type" />
+        </el-form-item>
+        <el-form-item label="起始周" prop="week">
+          <el-input v-model="temp.week" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -215,9 +211,7 @@ export default {
       showHidden: false,
       showSemester: false,
       rules: {
-        type: [{ required: true, message: 'type is required', trigger: 'change' }],
-        timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
-        title: [{ required: true, message: 'title is required', trigger: 'blur' }]
+        cid: [{ required: true, message: 'ID is required', trigger: 'blur' }]
       },
 
       temp: {
@@ -236,6 +230,7 @@ export default {
         update: 'Edit',
         create: 'Create'
       },
+      evaluations: ['考察', '考核'],
       dialogPvVisible: false,
       pvData: [],
 
