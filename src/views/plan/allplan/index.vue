@@ -110,22 +110,19 @@
       title="课程增加"
       :visible.sync="searchShow"
     >
-      <el-input
-        v-model="search.id"
-        placeholder="ID"
-        style="width: 250px;"
-        prefix-icon="el-icon-search"
-        clearable
+      <el-autocomplete
+        v-model="state"
+        :fetch-suggestions="querySearchAsync"
+        placeholder="请输入课程名或ID"
+        :trigger-on-focus="false"
         class="filter-item"
-      />
-      <el-input
-        v-model="search.name"
-        placeholder="Name"
-        style="width: 250px;"
-        prefix-icon="el-icon-search"
-        clearable
-        class="filter-item"
-      />
+        @select="handleSelect"
+      >
+        <template slot-scope="{ item }">
+          <span class="addr">{{ item.cid }}</span>
+          <div class="name">{{ item.name }}</div>
+        </template>
+      </el-autocomplete>
       <el-button type="primary" class="filter-item">搜索</el-button>
     </el-dialog>
 
@@ -269,7 +266,8 @@ export default {
         id: null,
         name: null
       },
-      courseList: null
+      courseList: null,
+      state: ''
     }
   },
   watch: {
@@ -451,6 +449,18 @@ export default {
           })
         }
       })
+    },
+    querySearchAsync(queryString, cb) {
+      var courseList = this.courseList
+      console.log(courseList)
+      var results = queryString ? courseList.filter(item => {
+        console.log(item)
+        return ((item.name && item.name.indexOf(queryString) >= 0) || (item.cid && item.cid.indexOf(queryString) >= 0))
+      }) : courseList
+      cb(results)
+    },
+    handleSelect(item) {
+      console.log(item)
     }
   }
 
@@ -458,5 +468,12 @@ export default {
 </script>
 
 <style scoped>
-
+  .name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .addr {
+    font-size: 12px;
+    color: #b4b4b4;
+  }
 </style>
