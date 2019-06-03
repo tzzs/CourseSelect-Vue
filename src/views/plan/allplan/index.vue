@@ -110,21 +110,55 @@
       title="课程增加"
       :visible.sync="searchShow"
     >
-      <el-autocomplete
-        v-model="state"
-        :fetch-suggestions="querySearchAsync"
-        placeholder="请输入课程名或ID"
-        :trigger-on-focus="false"
-        class="filter-item"
-        style="width: 80%;"
-        @select="handleSelect"
+
+      <el-form
+        ref="dataForm"
+        :rules="rules"
+        :model="addForm"
+        label-position="left"
+        label-width="70px"
+        style="width: 400px; margin-left:50px;"
       >
-        <template slot-scope="{ item }">
-          <span class="addr">{{ item.cid }}</span>
-          <div class="name">{{ item.name }}</div>
-        </template>
-      </el-autocomplete>
-      <el-button type="primary" class="filter-item">增加</el-button>
+        <el-form-item label="课程">
+          <el-autocomplete
+            v-model="state"
+            :fetch-suggestions="querySearchAsync"
+            placeholder="请输入课程名或ID"
+            :trigger-on-focus="false"
+            class="filter-item"
+            style="width: 80%;"
+            clearable
+            @select="handleSelect"
+          >
+            <template slot-scope="{ item }">
+              <span class="addr">{{ item.cid }}</span>
+              <div class="name">{{ item.name }}</div>
+            </template>
+          </el-autocomplete>
+        </el-form-item>
+        <div v-show="inputShow">
+          <el-form-item label="年级" prop="grade">
+            <el-input v-model="addForm.grade" />
+          </el-form-item>
+          <el-form-item label="学期" prop="semester">
+            <el-input v-model="addForm.semester" />
+          </el-form-item>
+          <el-form-item label="学院" prop="college">
+            <el-input v-model="addForm.cid" />
+          </el-form-item>
+          <el-form-item label="名称" prop="profession">
+            <el-input v-model="addForm.name" />
+          </el-form-item>
+        </div>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">
+          Cancel
+        </el-button>
+        <el-button type="primary" @click="addPlan()">
+          Confirm
+        </el-button>
+      </div>
     </el-dialog>
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
@@ -261,6 +295,13 @@ export default {
       colleges: null,
       professions: null,
 
+      addForm: {
+        course: undefined,
+        semester: undefined,
+        grade: undefined,
+        college: undefined,
+        profession: undefined
+      },
       searchLoading: false,
       searchShow: false,
       search: {
@@ -269,7 +310,8 @@ export default {
       },
       courseList: null,
       state: '',
-      addCourse: null
+      addCourse: null,
+      inputShow: false
     }
   },
   watch: {
@@ -455,7 +497,6 @@ export default {
       var courseList = this.courseList
       console.log(courseList)
       var results = queryString ? courseList.filter(item => {
-        console.log(item)
         return ((item.name && item.name.indexOf(queryString) >= 0) || (item.cid && item.cid.indexOf(queryString) >= 0))
       }) : courseList
       cb(results)
@@ -464,6 +505,8 @@ export default {
       console.log(item)
       this.state = item.cid + '-' + item.name
       this.addCourse = item
+      this.addForm.course = item.cid
+      this.inputShow = true
     }
   }
 
