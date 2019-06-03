@@ -144,10 +144,10 @@
             <el-input v-model="addForm.semester" />
           </el-form-item>
           <el-form-item label="学院" prop="college">
-            <el-input v-model="addForm.cid" />
+            <el-input v-model="addForm.college" />
           </el-form-item>
-          <el-form-item label="名称" prop="profession">
-            <el-input v-model="addForm.name" />
+          <el-form-item label="专业" prop="profession">
+            <el-input v-model="addForm.profession" />
           </el-form-item>
         </div>
       </el-form>
@@ -227,7 +227,7 @@ import { fetchList, fetchPv, fetchAllList, createCourse, updateCourse } from '@/
 
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import { getPlanList } from '@/api/plan'
+import { getPlanList, addPlan } from '@/api/plan'
 import { getCourseList } from '@/api/apicourse'
 
 export default {
@@ -410,7 +410,7 @@ export default {
       this.handleFilter()
     },
     handleAdd() {
-      this.searchLoading = true
+      // this.searchLoading = true
       this.getCourseList()
       this.searchShow = true
     },
@@ -495,7 +495,6 @@ export default {
     },
     querySearchAsync(queryString, cb) {
       var courseList = this.courseList
-      console.log(courseList)
       var results = queryString ? courseList.filter(item => {
         return ((item.name && item.name.indexOf(queryString) >= 0) || (item.cid && item.cid.indexOf(queryString) >= 0))
       }) : courseList
@@ -507,6 +506,21 @@ export default {
       this.addCourse = item
       this.addForm.course = item.cid
       this.inputShow = true
+    },
+    addPlan() {
+      addPlan(this.addForm).then(response => {
+        if (parseInt(response.code) === 20000) {
+          this.$message({
+            message: response.message,
+            type: 'success'
+          })
+        } else {
+          this.$message.error(response.message)
+        }
+      }).catch(function(err) {
+        this.$message.error(err)
+      })
+      this.searchShow = false
     }
   }
 

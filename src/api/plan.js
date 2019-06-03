@@ -15,3 +15,11 @@ export function getPlanList(query) {
     params: query
   })
 }
+
+export function addPlan(params) {
+  return request({
+    url: '/plan/add',
+    method: 'post',
+    params
+  })
+}
