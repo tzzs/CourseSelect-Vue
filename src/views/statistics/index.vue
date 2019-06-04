@@ -159,7 +159,7 @@
 </template>
 
 <script>
-import { fetcheList, fetchElectiveList } from '@/api/elective'
+import { fetcheList, fetchetList } from '@/api/elective'
 import { fetchList } from '@/api/student'
 import waves from '@/directive/waves' // waves directive
 // import { parseTime } from '@/utils'
@@ -198,7 +198,7 @@ export default {
     // 获取课程信息
     getList() {
       this.listLoading = true
-      fetchElectiveList(this.listQuery).then(response => {
+      fetchetList(this.listQuery).then(response => {
         const items = response.data.items
         // console.log(items)
         for (const i in items) {

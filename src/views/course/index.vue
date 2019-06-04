@@ -105,12 +105,6 @@
               <span>{{ scope.row.peroid }}</span>
             </template>
           </el-table-column>
-
-          <el-table-column class-name="status-col" align="center" label="剩余可选" width="100">
-            <template slot-scope="scope">
-              <span>{{ scope.row.number }}</span>
-            </template>
-          </el-table-column>
         </el-table>
       </el-collapse-item>
       <el-collapse-item name="2">
@@ -221,7 +215,7 @@
 
 <script>
 import { fetchList, fetchRecList } from '@/api/course'
-import { fetchElectiveList} from '../../api/elective'
+import { fetchElectiveList, add } from '../../api/elective'
 import waves from '@/directive/waves' // waves directive
 // import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
@@ -326,6 +320,9 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
+        for (const c of this.checkList) {
+          add({ cid: c.cid })
+        }
         this.$message({
           type: 'successs',
           message: '提交成功'
@@ -353,6 +350,7 @@ export default {
         this.creditSum += i.credit
       }
       this.checkList = val
+      console.log(this.checkList)
     }
   }
 }

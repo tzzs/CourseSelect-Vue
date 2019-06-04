@@ -26,7 +26,7 @@
     >
       <el-table-column align="center" label="ID">
         <template slot-scope="scope">
-          <span>{{ scope.row.id }}</span>
+          <span>{{ scope.row.cid }}</span>
         </template>
       </el-table-column>
 
@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { fetchElectiveList } from '@/api/elective'
+import { get } from '@/api/elective'
 import waves from '@/directive/waves' // waves directive
 // import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
@@ -144,7 +144,7 @@ export default {
     // 获取课程信息
     getList() {
       this.listLoading = true
-      fetchElectiveList(this.listQuery).then(response => {
+      get(this.listQuery).then(response => {
         this.list = response.data.items
         console.log(this.list)
         this.total = response.data.total

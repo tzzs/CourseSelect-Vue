@@ -32,7 +32,7 @@
     >
       <el-table-column align="center" sortable label="ID">
         <template slot-scope="scope">
-          <span>{{ scope.row.id }}</span>
+          <span>{{ scope.row.cid }}</span>
         </template>
       </el-table-column>
 
@@ -47,11 +47,11 @@
           <span>{{ scope.row.teacher }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="学期" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.semester }}</span>
-        </template>
-      </el-table-column>
+<!--      <el-table-column label="学期" align="center">-->
+<!--        <template slot-scope="scope">-->
+<!--          <span>{{ scope.row.semester }}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
       <el-table-column label="评分" width="100">
         <template slot-scope="scope">
           <svg-icon v-for="n in +scope.row.rate" :key="n" icon-class="star" class="meta-item__icon" />
@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import { fetchElectiveList } from '@/api/elective'
+import { fetchElectiveList, getElective } from '@/api/elective'
 import waves from '@/directive/waves' // waves directive
 // import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
@@ -143,12 +143,12 @@ export default {
     // 获取课程信息
     getList() {
       this.listLoading = true
-      fetchElectiveList(this.listQuery).then(response => {
+      getElective(this.listQuery).then(response => {
         const items = response.data.items
-        // console.log(items)
-        for (const i in items) {
-          items[i].time = this.sortByWeeks(items[i].time)
-        }
+        console.log(items)
+        // for (const i in items) {
+        //   items[i].time = this.sortByWeeks(items[i].time)
+        // }
         this.list = items
         this.total = response.data.total
         this.listLoading = false
