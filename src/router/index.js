@@ -48,17 +48,38 @@ export const constantRoutes = [
     hidden: true
   },
 
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: 'dashboard',
+  //   children: [{
+  //     path: 'dashboard',
+  //     name: 'Dashboard',
+  //     component: () => import('@/views/dashboard/index'),
+  //     meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+  //   }]
+  // },
   {
     path: '/',
     component: Layout,
-    redirect: 'dashboard',
+    redirect: 'profile',
     children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+      name: 'Profile',
+      path: 'profile',
+      component: () => import('@/views/profile/index'),
+      meta: { title: '个人信息', icon: 'user' }
     }]
   },
+  // {
+  //   path: '/profile',
+  //   component: Layout,
+  //   children: [{
+  //     name: 'Profile',
+  //     path: 'index',
+  //     component: () => import('@/views/profile/index'),
+  //     meta: { title: '个人信息', icon: 'user' }
+  //   }]
+  // },
 
   // {
   //   path: '/example',
@@ -126,54 +147,54 @@ export const constantRoutes = [
       meta: { title: '成绩查询', icon: 'grade' }
     }]
   },
-  {
-    path: '/manage',
-    component: Layout,
-    redirect: '/manage/teacher',
-    name: 'Manage',
-    meta: {
-      title: '管理',
-      icon: 'manager'
-    },
-    children: [
-      {
-        path: 'teacher',
-        name: 'Teacher',
-        component: () => import('@/views/manage/teachers'),
-        meta: { title: 'Teachers Manage', icon: 'teacher' }
-      },
-      {
-        path: 'student',
-        name: 'Student',
-        component: () => import('@/views/manage/students'),
-        meta: { title: 'Students Manage', icon: 'student' }
-      },
-      {
-        path: 'course',
-        name: 'Course',
-        component: () => import('@/views/manage/course'),
-        meta: { title: 'Course Manage', icon: 'college' }
-      },
-      {
-        path: 'college',
-        name: 'College',
-        component: () => import('@/views/manage/students'),
-        meta: { title: 'College Manage', icon: 'college' }
-      },
-      {
-        path: 'class',
-        name: 'Class',
-        component: () => import('@/views/manage/students'),
-        meta: { title: 'Class Manage', icon: 'class' }
-      },
-      {
-        path: 'test',
-        name: 'Test',
-        component: () => import('@/views/manage/test'),
-        meta: { title: 'TEST', icon: 'class' }
-      }
-    ]
-  },
+  // {
+  //   path: '/manage',
+  //   component: Layout,
+  //   redirect: '/manage/teacher',
+  //   name: 'Manage',
+  //   meta: {
+  //     title: '管理',
+  //     icon: 'manager'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'teacher',
+  //       name: 'Teacher',
+  //       component: () => import('@/views/manage/teachers'),
+  //       meta: { title: 'Teachers Manage', icon: 'teacher' }
+  //     },
+  //     {
+  //       path: 'student',
+  //       name: 'Student',
+  //       component: () => import('@/views/manage/students'),
+  //       meta: { title: 'Students Manage', icon: 'student' }
+  //     },
+  //     {
+  //       path: 'course',
+  //       name: 'Course',
+  //       component: () => import('@/views/manage/course'),
+  //       meta: { title: 'Course Manage', icon: 'college' }
+  //     },
+  //     {
+  //       path: 'college',
+  //       name: 'College',
+  //       component: () => import('@/views/manage/students'),
+  //       meta: { title: 'College Manage', icon: 'college' }
+  //     },
+  //     {
+  //       path: 'class',
+  //       name: 'Class',
+  //       component: () => import('@/views/manage/students'),
+  //       meta: { title: 'Class Manage', icon: 'class' }
+  //     },
+  //     {
+  //       path: 'test',
+  //       name: 'Test',
+  //       component: () => import('@/views/manage/test'),
+  //       meta: { title: 'TEST', icon: 'class' }
+  //     }
+  //   ]
+  // },
   {
     path: '/teacher',
     component: Layout,
@@ -224,16 +245,7 @@ export const constantRoutes = [
       meta: { title: '学生管理', icon: 'student' }
     }]
   },
-  {
-    path: '/profile',
-    component: Layout,
-    children: [{
-      name: 'Profile',
-      path: 'index',
-      component: () => import('@/views/profile/index'),
-      meta: { title: '个人信息', icon: 'user' }
-    }]
-  },
+
   {
     path: 'cqut',
     component: Layout,
