@@ -40,7 +40,6 @@
       </el-button>
     </div>
 
-    <el-divider />
     <el-collapse v-model="activeName" accordion>
       <el-collapse-item name="1">
         <template slot="title">
