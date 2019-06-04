@@ -31,7 +31,7 @@
                   </span>
                 </el-col>
                 <el-col :span="7">
-                  <el-button type="primary" size="small" icon="el-icon-edit">编辑个人信息</el-button>
+                  <el-button type="primary" size="small" icon="el-icon-edit" @click="activeName='third'">编辑个人信息</el-button>
                 </el-col>
                 <el-col :span="7" />
               </el-row>
@@ -43,7 +43,7 @@
                   <span class="font-small">注册时间：{{ info.regTime }}</span>
                 </el-col>
                 <el-col :span="4">
-                  <span class="font-small">身份：学生</span>
+                  <span class="font-small">身份：{{ info.roles }}</span>
                 </el-col>
               </el-row>
             </el-col>
@@ -79,7 +79,7 @@
                   <span class="name" style="margin-top: 1%;display: block">{{ info.name }}</span>
                 </el-col>
                 <el-col :span="7">
-                  <el-button type="primary" size="small" icon="el-icon-edit">编辑个人信息</el-button>
+                  <el-button type="primary" size="small" icon="el-icon-edit" @click="activeName='third'">编辑个人信息</el-button>
                 </el-col>
               </el-row>
               <el-row :gutter="24">
@@ -152,6 +152,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { fetchInfo, updateInfo } from '../../api/student'
+import { getInfo } from '@/api/user'
 // import PanThumb from '@/components/PanThumb'
 
 export default {
@@ -198,8 +199,8 @@ export default {
       })
     },
     getInfo() {
-      fetchInfo().then(response => {
-        this.info = response.data.profile
+      getInfo().then(response => {
+        this.info = response.data.user
         console.log(this.info)
         this.form = {
           name: this.info.name,
