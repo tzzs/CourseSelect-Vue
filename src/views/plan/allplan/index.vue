@@ -152,7 +152,7 @@
         </div>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">
+        <el-button @click="searchShow = false">
           Cancel
         </el-button>
         <el-button type="primary" @click="addPlan()">
