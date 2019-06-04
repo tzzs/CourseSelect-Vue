@@ -81,40 +81,6 @@ export const constantRoutes = [
   //   }]
   // },
 
-  // {
-  //   path: '/example',
-  //   component: Layout,
-  //   redirect: '/example/table',
-  //   name: 'Example',
-  //   meta: { title: 'Example', icon: 'example' },
-  //   children: [
-  //     {
-  //       path: 'table',
-  //       name: 'Table',
-  //       component: () => import('@/views/table/index'),
-  //       meta: { title: 'Table', icon: 'table' }
-  //     },
-  //     {
-  //       path: 'tree',
-  //       name: 'Tree',
-  //       component: () => import('@/views/tree/index'),
-  //       meta: { title: 'Tree', icon: 'tree' }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '/form',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       name: 'Form',
-  //       component: () => import('@/views/form/index'),
-  //       meta: { title: 'Form', icon: 'form' }
-  //     }
-  //   ]
-  // },
-
   {
     path: '/course',
     component: Layout,
@@ -147,64 +113,7 @@ export const constantRoutes = [
       meta: { title: '成绩查询', icon: 'grade' }
     }]
   },
-  // {
-  //   path: '/manage',
-  //   component: Layout,
-  //   redirect: '/manage/teacher',
-  //   name: 'Manage',
-  //   meta: {
-  //     title: '管理',
-  //     icon: 'manager'
-  //   },
-  //   children: [
-  //     {
-  //       path: 'teacher',
-  //       name: 'Teacher',
-  //       component: () => import('@/views/manage/teachers'),
-  //       meta: { title: 'Teachers Manage', icon: 'teacher' }
-  //     },
-  //     {
-  //       path: 'student',
-  //       name: 'Student',
-  //       component: () => import('@/views/manage/students'),
-  //       meta: { title: 'Students Manage', icon: 'student' }
-  //     },
-  //     {
-  //       path: 'course',
-  //       name: 'Course',
-  //       component: () => import('@/views/manage/course'),
-  //       meta: { title: 'Course Manage', icon: 'college' }
-  //     },
-  //     {
-  //       path: 'college',
-  //       name: 'College',
-  //       component: () => import('@/views/manage/students'),
-  //       meta: { title: 'College Manage', icon: 'college' }
-  //     },
-  //     {
-  //       path: 'class',
-  //       name: 'Class',
-  //       component: () => import('@/views/manage/students'),
-  //       meta: { title: 'Class Manage', icon: 'class' }
-  //     },
-  //     {
-  //       path: 'test',
-  //       name: 'Test',
-  //       component: () => import('@/views/manage/test'),
-  //       meta: { title: 'TEST', icon: 'class' }
-  //     }
-  //   ]
-  // },
-  {
-    path: '/teacher',
-    component: Layout,
-    children: [{
-      name: 'Teacher',
-      path: 'index',
-      component: () => import('@/views/manage/teachers/index'),
-      meta: { title: '教师管理', icon: 'teacher' }
-    }]
-  },
+
   {
     path: '/plan',
     component: Layout,
@@ -233,6 +142,16 @@ export const constantRoutes = [
       path: 'index',
       component: () => import('@/views/statistics/index'),
       meta: { title: '课程统计', icon: 'course' }
+    }]
+  },
+  {
+    path: '/teacher',
+    component: Layout,
+    children: [{
+      name: 'Teacher',
+      path: 'index',
+      component: () => import('@/views/manage/teachers/index'),
+      meta: { title: '教师管理', icon: 'teacher', roles: ['admin', 'stu', 'edit'] }
     }]
   },
   {
@@ -270,6 +189,21 @@ export const constantRoutes = [
   },
 
   // 404 page must be placed at the end !!!
+  { path: '*', redirect: '/404', hidden: true }
+]
+
+export const asyncRoutes = [
+  {
+    path: '/teacher',
+    component: Layout,
+    meta: { roles: ['admin', 'stu', 'edit'] },
+    children: [{
+      name: 'Teacher',
+      path: 'index',
+      component: () => import('@/views/manage/teachers/index'),
+      meta: { title: '教师管理', icon: 'teacher', roles: ['admin', 'stu', 'edit'] }
+    }]
+  },
   { path: '*', redirect: '/404', hidden: true }
 ]
 
