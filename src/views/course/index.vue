@@ -65,7 +65,7 @@
           />
           <el-table-column align="center" sortable label="ID" width="80">
             <template slot-scope="scope">
-              <span>{{ scope.row.id }}</span>
+              <span>{{ scope.row.cid }}</span>
             </template>
           </el-table-column>
 
@@ -80,11 +80,6 @@
               <span>{{ scope.row.teacher }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="学期" align="center">
-            <template slot-scope="scope">
-              <span>{{ scope.row.semester }}</span>
-            </template>
-          </el-table-column>
           <el-table-column label="评分" width="100">
             <template slot-scope="scope">
               <svg-icon v-for="n in +scope.row.rate" :key="n" icon-class="star" class="meta-item__icon" />
@@ -93,10 +88,10 @@
           <el-table-column label="人数" align="center" width="100">
             <template slot-scope="{row}">
               <span
-                v-if="row.stu_number"
+                v-if="row.number"
                 class="link-type"
-                @click="handleFetchPv(row.stu_number)"
-              >{{ row.stu_number }}</span>
+                @click="handleFetchPv(row.number)"
+              >{{ row.number }}</span>
               <span v-else>0</span>
             </template>
           </el-table-column>
@@ -107,31 +102,13 @@
           </el-table-column>
           <el-table-column width="100" align="center" label="学时">
             <template slot-scope="scope">
-              <span>{{ scope.row.period }}</span>
+              <span>{{ scope.row.peroid }}</span>
             </template>
           </el-table-column>
 
           <el-table-column class-name="status-col" align="center" label="剩余可选" width="100">
             <template slot-scope="scope">
-              <span>{{ scope.row.stu_number }}</span>
-            </template>
-          </el-table-column>
-
-          <el-table-column align="center" label="上课时间" min-width="110">
-            <template slot-scope="scope">
-              <el-dropdown>
-                <span class="el-dropdown-link">
-                  学时：{{ scope.row.period }}<i class="el-icon-arrow-down el-icon--right" />
-                </span>
-                <el-dropdown-menu
-                  slot="dropdown"
-                >
-                  <el-dropdown-item
-                    v-for="t of scope.row.time"
-                    disabled
-                  >{{ t.weeks }}周-星期{{ t.week }}-{{ t.lesson }}</el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
+              <span>{{ scope.row.number }}</span>
             </template>
           </el-table-column>
         </el-table>
@@ -244,6 +221,7 @@
 
 <script>
 import { fetchList, fetchRecList } from '@/api/course'
+import { fetchElectiveList} from '../../api/elective'
 import waves from '@/directive/waves' // waves directive
 // import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
@@ -304,11 +282,11 @@ export default {
         this.total = response.data.total
         this.listLoading = false
       })
-      fetchRecList().then(response => {
+      fetchElectiveList().then(response => {
         const items = response.data.items
-        for (const i in items) {
-          items[i].time = this.sortByWeeks(items[i].time)
-        }
+        // for (const i in items) {
+        //   items[i].time = this.sortByWeeks(items[i].time)
+        // }
         this.recList = items
         this.recTotal = response.data.total
         this.listLoading = false
