@@ -19,7 +19,7 @@ export function register(data) {
 export function getInfo(token) {
   return request({
     url: '/user/info',
-    method: 'get',
+    method: 'post',
     params: { token }
   })
 }
