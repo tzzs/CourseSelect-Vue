@@ -85,6 +85,16 @@
           <span>{{ row.week }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="学院" class-name="status-col">
+        <template slot-scope="{row}">
+          <span>{{ row.college }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="专业" class-name="status-col">
+        <template slot-scope="{row}">
+          <span>{{ row.profession }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="Actions" align="center" class-name="small-padding fixed-width" min-width="180px">
         <template slot-scope="{row}">
           <el-button size="mini" type="success" @click="handleUpdate(row)">
